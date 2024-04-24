@@ -1,11 +1,22 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import TerminalLoader from '../loading';
 
 const Login: React.FC = () => {
-  // State variables for email and password fields
+  // State variables for email, password, and loading
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(true); // Loading state, initially set to true
+
+  // Simulate loading for 5 seconds when component mounts
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 50000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Function to handle form submission
   const handleSubmit = (e: React.FormEvent) => {
@@ -14,6 +25,10 @@ const Login: React.FC = () => {
     console.log('Email:', email);
     console.log('Password:', password);
   };
+
+  if (isLoading) {
+    return <TerminalLoader/>
+  }
 
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
