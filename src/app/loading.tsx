@@ -3,7 +3,7 @@ import styles from './loading.module.css'
 
 const TerminalLoader: React.FC = () => {
     return (
-        <div className={`flex h-screen ${styles.background}`}>
+        <div className={`flex h-screen z-10 ${styles.background}`}>
             <div className={`${styles.terminalLoader}`}>
                 <div className={`${styles.terminalHeader}`}>
                     <div className={`${styles.terminalTitle}`}>Status</div>
