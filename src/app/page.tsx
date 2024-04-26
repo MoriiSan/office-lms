@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import TerminalLoader from './loading';
 import Signup from './components/Signup';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -22,16 +24,20 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className='flex justify-around items-center h-screen bg-[#f5ffe5]'>
-        <div className='w-1/2'>
-          <h1 className='font-sans text-4xl font-extrabold text-[#333333] '>Level Up Your Career With Academia Quest!</h1>
-          <p className='font-sans text-lg  font-medium text-[#333333] my-2.5'>Begin a transformative journey with
-            6,900+ immersive quests, certificates, and degrees from top universities and companies. Unleash boundless
-            opportunities on your path to success!
-          </p>
+      <div className='flex flex-col bg-[#f5f0f6] h-screen'>
+        <Navbar />
+        <div className='flex flex-grow justify-around items-center mx-10'>
+          <div className='w-1/2'>
+            <h1 className='font-sans text-4xl font-extrabold text-[#181f1c] '>Level Up Your Skills With AcademiaQuest!</h1>
+            <p className='font-sans text-lg  font-medium text-[#181f1c] my-2.5'>Begin a transformative journey with
+              6,900+ immersive quests, certificates, and degrees from top universities and companies. Unleash boundless
+              opportunities on your path to success!
+            </p>
+          </div>
+          <Signup />
         </div>
-        <Signup />
       </div>
+      <Footer />
     </>
   );
 };
