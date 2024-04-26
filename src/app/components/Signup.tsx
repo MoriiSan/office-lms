@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation'
 
-const Login: React.FC = () => {
+const Signup: React.FC = () => {
   const router = useRouter()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -16,9 +16,11 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <div className="">
-        <div className="bg-white p-8 rounded-lg shadow-md w-96">
-          <h2 className=" flex justify-center text-2xl font-black mb-4 text-gray-700">Sign Up</h2>
+      <div className=''>
+        <div className='bg-white p-8 rounded-lg shadow-md w-96'>
+          <h2 className='flex justify-center text-xl font-bold text-gray-700'>Sign Up</h2>
+          <p className='flex justify-center text-gray-700 mb-4'>Forge your path with Academy Quest!
+          </p>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="email" className="block text-gray-700 font-bold mb-2">
@@ -62,4 +64,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Signup;
