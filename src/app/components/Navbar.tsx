@@ -34,7 +34,6 @@ const Navbar: React.FC = () => {
                     </div>
                     <div className='flex gap-4'>
                         <div className='rounded-lg py-1 px-2'>Log In</div>
-                        <div className='border rounded-md border-[#3d481e] py-1 px-2'>Sign Up</div>
                     </div>
                 </div>
             </nav>
