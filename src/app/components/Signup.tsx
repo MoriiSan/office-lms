@@ -7,6 +7,9 @@ import PasswordIcon from "../../../public/assets/icons/password";
 import EyeIcon from "../../../public/assets/icons/eye";
 import EyeClosedIcon from "../../../public/assets/icons/eyeClosed";
 import WarningIcon from "../../../public/assets/icons/warning";
+import ValidIcon from "../../../public/assets/icons/valid";
+import { FcGoogle } from "react-icons/fc";
+import { VscGithubInverted } from "react-icons/vsc";
 
 const Signup: React.FC = () => {
   const router = useRouter();
@@ -28,13 +31,13 @@ const Signup: React.FC = () => {
 
   const passwordInputType = showPassword ? "text" : "password";
 
-  const isValidEmail = (email: string) => {
+  const isEmailValid = (email: string) => {
     // Regular expression to validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const isEmailInvalid = email && !isValidEmail(email);
+  const isEmailInvalid = email && !isEmailValid(email);
 
   const isSubmitDisabled = !(email && password && fName && lName);
 
@@ -87,8 +90,13 @@ const Signup: React.FC = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              {isEmailValid(email) && (
+                <span className="absolute h-4 w-4 top-1/2 translate-y-[-45%] right-3">
+                  <ValidIcon hex={"#2da94e"} />
+                </span>
+              )}
               {isEmailInvalid && (
-                <span className="absolute h-5 w-5 top-1/2 translate-y-[-45%] right-3">
+                <span className="absolute h-4 w-4 top-1/2 translate-y-[-45%] right-3">
                   <WarningIcon hex={"#be1809"} />
                 </span>
               )}
@@ -123,7 +131,6 @@ const Signup: React.FC = () => {
                 <u>Terms of Services</u> & <u>Privacy Policy</u>.
               </span>
             </div>
-
             <button
               type="submit"
               disabled={isSubmitDisabled}
@@ -142,21 +149,27 @@ const Signup: React.FC = () => {
               </div>
               <div>-</div>
             </div>
-            <div className="gap-4">
-              <button
-                type="submit"
-                className="w-full border border-[#939d90] text-sm text-[#939d90] py-2 mb-4 rounded-md hover:border-[#3d481e] hover:text-[#3d481e]"
-              >
-                Continue with Google
-              </button>
-              <button
-                type="submit"
-                className="w-full border border-[#939d90] text-sm text-[#939d90] py-2 rounded-md hover:border-[#3d481e] hover:text-[#3d481e]"
-              >
-                Continue with Github
-              </button>
-            </div>
           </form>
+          <div className="gap-4">
+            <button
+              // type="submit"
+              className="flex items-center justify-center w-full border border-[#3d481e] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#3d481e] py-2 mb-4 rounded-md hover:border-[#3d481e] hover:text-[#3d481e]"
+            >
+              <span className="flex justify-center items-center mr-2">
+                <FcGoogle size={20} />
+              </span>
+              Continue with Google
+            </button>
+            <button
+              // type="submit"
+              className="flex items-center justify-center w-full border border-[#3d481e] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#3d481e] py-2 rounded-md hover:border-[#3d481e] hover:text-[#3d481e]"
+            >
+              <span className="flex justify-center items-center mr-2">
+                <VscGithubInverted size={20} />
+              </span>
+              Continue with Github
+            </button>
+          </div>
         </div>
       </div>
     </>
