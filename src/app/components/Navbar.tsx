@@ -20,8 +20,8 @@ const Navbar: React.FC = () => {
 
     return (
         <>
-            <nav className={`fixed fixed top-0 flex w-full flex-wrap items-center justify-between bg-zinc-50 px-10 py-2 dark:bg-[#f1ede5] text-[#274029] lg:py-4 
-            ${scrolled ? `border-b border-[#274029]` : ''}`}>
+            <nav className={`fixed top-0 flex w-full flex-wrap items-center justify-between px-10 py-2 text-[#274029] lg:py-4 
+            ${scrolled ? `border-b border-[#274029] bg-white` : 'bg-[#f1ede5] '}`}>
                 <div className="flex w-full flex-wrap items-center justify-between px-3">
                     <div className="flex items-center ms-2">
                         <a className="text-xl font-extrabold hover:text-[#9ea93f] mr-10" href="">AcademiaQuest!</a>

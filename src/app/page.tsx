@@ -26,7 +26,7 @@ const App: React.FC = () => {
     <>
       <div className='flex flex-col bg-[#f1ede5] h-screen'>
         <Navbar />
-        <div className='flex flex-grow justify-around items-center mx-10 mt-[30px]'>
+        <div className='flex flex-grow justify-around items-center mx-10 mt-[25px]'>
           <div className='w-1/2'>
             <h1 className='font-sans text-4xl font-extrabold text-[#181f1c] '>Level Up Your Skills With AcademiaQuest!</h1>
             <p className='font-sans text-lg  font-medium text-[#181f1c] my-2.5'>Begin a transformative journey with
