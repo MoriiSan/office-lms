@@ -44,7 +44,7 @@ const Signup: React.FC = () => {
   return (
     <>
       <div className="">
-        <div className=" border-[#3d481e] p-8 rounded-lg w-[450px] min-w-96">
+        <div className="border border-[#3d481e] p-8 rounded-lg w-[450px]">
           <h2 className="flex justify-center text-lg font-extrabold text-[#3d481e]">
             Join AcademiaQuest and forge your skills!
           </h2>
@@ -128,7 +128,8 @@ const Signup: React.FC = () => {
               {" "}
               <span>
                 By clicking sign up, you agree to AcademyQuest's{" "}
-                <u>Terms of Services</u> & <u>Privacy Policy</u>.
+                <u className="cursor-pointer">Terms of Services</u> &{" "}
+                <u className="cursor-pointer">Privacy Policy</u>.
               </span>
             </div>
             <button
