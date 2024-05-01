@@ -27,30 +27,30 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
   return (
     <>
       <nav
-        className={`fixed top-0 flex w-full flex-wrap items-center justify-between px-14 py-2 text-[#274029] lg:py-4 
+        className={`sticky z-10 top-0 flex w-full flex-wrap items-center justify-between px-14 py-2 text-[#071e22] lg:py-4 
             ${
-              scrolled ? `border-b border-[#274029] bg-white` : "bg-[#f1ede5] "
+              scrolled ? `border-b border-[#274029] bg-white` : "bg-[#fbe9da] "
             }`}
       >
-        <div className="flex w-full items-center justify-between h-[40px]">
-          <div className="flex items-center ms-2">
+        <div className="flex w-full items-center justify-between h-[40px]  mx-2">
+          <div className="flex items-center">
             <a
-              className="text-xl font-extrabold hover:text-[#9ea93f] mr-10"
+              className="text-xl font-extrabold hover:text-[#24948e] mr-10"
               href="/"
             >
               AcademiaQuest!
             </a>
-            <div className="flex gap-10 font-medium">
-              <p className="flex gap-1 items-center justify-center hover:text-[#9ea93f]">
+            <div className="flex gap-10 font-normal text-sm">
+              <p className="flex gap-1 items-center justify-center hover:text-[#24948e]">
                 Courses <GoChevronDown />
               </p>
-              <p className="flex gap-2 items-center justify-center hover:text-[#9ea93f]">
+              <p className="flex gap-2 items-center justify-center hover:text-[#24948e]">
                 Resources <GoChevronDown />
               </p>
-              <p className="flex gap-2 items-center justify-center hover:text-[#9ea93f]">
+              <p className="flex gap-2 items-center justify-center hover:text-[#24948e]">
                 Community <GoChevronDown />
               </p>
-              <p className="flex gap-2 items-center justify-center hover:text-[#9ea93f]">
+              <p className="flex gap-2 items-center justify-center hover:text-[#24948e]">
                 Pricing <GoChevronDown />
               </p>
             </div>
@@ -58,13 +58,14 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
           <div className="flex gap-4">
             {isDashboardPage ? (
               // Render the user icon for the dashboard page
-              <FaUserCircle
-                size={40}
-                className="cursor-pointer text-[#3d481e]"
-              />
+              <div className="flex gap-4">
+                Logout
+              </div>
             ) : (
               // Render the login button for other pages
-              <div className="rounded-lg py-1 px-2">Log In</div>
+              <div className="hover:bg-[#effbfb] rounded-md py-2 px-3 text-[#071e22] text-sm font-bold">
+                Log In
+              </div>
             )}
           </div>
         </div>

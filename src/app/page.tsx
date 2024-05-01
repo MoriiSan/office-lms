@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import "./globals.css";
 import TerminalLoader from "./loading";
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
@@ -23,21 +24,27 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div className="flex flex-col flex-grow bg-[#f1ede5] h-auto">
+      <div className="flex flex-col bg-[#fbe9da]">
         <Navbar />
-        <div className="flex flex-wrap flex-row justify-around items-stretch px-16 py-4 mt-[72px] gap-10">
-          <div className="features-carousel-id flex-grow flex flex-col rounded-md bg-[#3d481e] w-1/2 text-[#f1ede5] min-w-[450px] px-10 py-20">
-            <h1 className="font-sans text-3xl font-extrabold">
+        <div className="base-layer flex flex-col lg:flex-row justify-center items-center px-4 lg:px-16 py-4 lg:min-h-[87vh] gap-8 bg-[#fbe9da] h-[80vh]">
+          <div className="carousel-component box-border flex flex-col rounded-md h-[500px] text-[#071e22] px-10 py-20 min-w-[450px]">
+            <h1 className="bg-[#fbe9da] py-2 px-2 font-sans text-6xl font-extrabold">
               Level Up Your Skills With AcademiaQuest!
             </h1>
-            <p className="font-sans text-md font-medium my-2.5">
+            <p className="bg-[#fbe9da]  py-4 px-2 font-sans text-lg font-medium ">
               Begin a transformative journey with 6,900+ immersive quests,
               certificates, and degrees from top universities and companies.
               Unleash boundless opportunities on your path to success!
             </p>
           </div>
-          <Signup />
+          <div className="">
+            <Signup />
+          </div>
         </div>
+        <div className="free-popular-courses flex lg:min-h-[87vh] bg-[#1d7874] justify-center items-center text-white">
+          free/popular courses
+        </div>
+        <div className="signup-shortcut flex lg:min-h-[87vh] justify-center items-center">signup shortcut</div>
         <Footer />
       </div>
     </>

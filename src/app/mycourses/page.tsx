@@ -42,7 +42,7 @@ const App: React.FC = () => {
             </div>
           </div>
           <div className="content-component">
-            <div className="font-bold">Keep Learning</div>
+            <div>Keep Learning</div>
             <div>Start Learning</div>
             <div>Discover more courses</div>
           </div>
