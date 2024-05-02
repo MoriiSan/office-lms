@@ -27,9 +27,9 @@ const App: React.FC = () => {
       <div className="flex flex-col bg-[#fbe9da]">
         <Navbar />
         <div className="base-layer flex flex-col lg:flex-row justify-center items-center px-4 lg:px-16 py-4 lg:min-h-[87vh] gap-8 bg-[#fbe9da] h-[80vh]">
-          <div className="carousel-component box-border flex flex-col rounded-md h-[500px] text-[#071e22] px-10 py-20 min-w-[450px]">
+          <div className=" carousel-component box-border flex flex-col rounded-md h-[500px] text-[#071e22] px-10 py-20 min-w-[450px]">
             <h1 className="bg-[#fbe9da] py-2 px-2 font-sans text-6xl font-extrabold">
-              Level Up Your Skills With AcademiaQuest!
+              Level Up Your Skills With SkillForge!
             </h1>
             <p className="bg-[#fbe9da]  py-4 px-2 font-sans text-lg font-medium ">
               Begin a transformative journey with 6,900+ immersive quests,
@@ -41,7 +41,7 @@ const App: React.FC = () => {
             <Signup />
           </div>
         </div>
-        <div className="free-popular-courses flex lg:min-h-[87vh] bg-[#1d7874] justify-center items-center text-white">
+        <div className="free-popular-courses flex lg:min-h-[87vh] bg-[#007B75] justify-center items-center text-white">
           free/popular courses
         </div>
         <div className="signup-shortcut flex lg:min-h-[87vh] justify-center items-center">signup shortcut</div>

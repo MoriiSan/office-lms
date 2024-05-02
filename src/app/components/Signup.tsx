@@ -44,12 +44,12 @@ const Signup: React.FC = () => {
   return (
     <>
       <div className="">
-        <div className="box-border border border-[#071e22] hover:border-[#24948e] p-8 rounded-md h-[500px] w-[450px]">
+        <div className="box-border border border-[#071e22] hover:border-[#007b75] bg-[#fbe9da] p-8 rounded-md h-[500px] w-[450px]">
           <h2 className="flex justify-center text-lg font-extrabold text-[#071e22]">
-            Join AcademiaQuest and forge your skills!
+            Join SkillForge and build your skills!
           </h2>
           <p className="flex justify-center text-[#071e22] mb-4">
-            Forge your path with AcademyQuest!
+            Forge your path with SkillForge
           </p>
           <form onSubmit={handleSubmit}>
             <div className="flex gap-[15px] mb-4">
@@ -57,7 +57,7 @@ const Signup: React.FC = () => {
                 <input
                   type=""
                   id=""
-                  className="w-full px-3 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#24948e] text-sm text-[#071e22] focus:text-[#071e22]"
+                  className="w-full px-3 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#007b75] text-sm text-[#071e22] focus:text-[#071e22]"
                   placeholder="First Name"
                   value={fName}
                   onChange={(e) => setFname(e.target.value)}
@@ -68,7 +68,7 @@ const Signup: React.FC = () => {
                 <input
                   type=""
                   id=""
-                  className="w-full px-3 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#24948e] text-sm text-[#071e22] focus:text-[#071e22]"
+                  className="w-full px-3 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#007b75] text-sm text-[#071e22] focus:text-[#071e22]"
                   placeholder="Last Name"
                   value={lName}
                   onChange={(e) => setLname(e.target.value)}
@@ -84,7 +84,7 @@ const Signup: React.FC = () => {
                 type="email"
                 className={`w-full px-3 ps-12 py-2 border ${
                   isEmailInvalid ? "border-[#ee2e31]" : "border-[#071e22]"
-                } bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#24948e] text-sm text-[#071e22] focus:text-[#071e22]`}
+                } bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#007b75] text-sm text-[#071e22] focus:text-[#071e22]`}
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -92,7 +92,7 @@ const Signup: React.FC = () => {
               />
               {isEmailValid(email) && (
                 <span className="absolute h-4 w-4 top-1/2 translate-y-[-45%] right-3">
-                  <ValidIcon hex={"#24948e"} />
+                  <ValidIcon hex={"#007b75"} />
                 </span>
               )}
               {isEmailInvalid && (
@@ -107,7 +107,7 @@ const Signup: React.FC = () => {
               </span>
               <input
                 type={passwordInputType}
-                className="w-full px-3 ps-12 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#24948e] text-sm text-[#071e22] focus:text-[#071e22]"
+                className="w-full px-3 ps-12 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#007b75] text-sm text-[#071e22] focus:text-[#071e22]"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -135,11 +135,11 @@ const Signup: React.FC = () => {
             <button
               type="submit"
               disabled={isSubmitDisabled}
-              className={`w-full bg-[#24948e] text-sm text-white py-2 rounded-md ${
-                isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#1d7874]"
+              className={`w-full bg-[#007B75] text-sm text-white py-2 rounded-md ${
+                isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#006661]"
               } mt-2`}
               // title={isSubmitDisabled ? "Please fill out all fields" : ""}
-              onClick={() => router.push("/learn/dashboard")}
+              onClick={() => router.push("/dashboard")}
             >
               Start Learning
             </button>
@@ -154,7 +154,7 @@ const Signup: React.FC = () => {
           <div className="gap-4">
             <button
               // type="submit"
-              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#24948e] hover:text-[#24948e]"
+              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#007b75] hover:text-[#007b75]"
             >
               <span className="flex justify-center items-center mr-2">
                 <FcGoogle size={20} />
@@ -163,7 +163,7 @@ const Signup: React.FC = () => {
             </button>
             <button
               // type="submit"
-              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#24948e] hover:text-[#24948e]"
+              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#007b75] hover:text-[#007b75]"
             >
               <span className="flex justify-center items-center mr-2">
                 <VscGithubInverted size={20} />

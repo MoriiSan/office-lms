@@ -6,7 +6,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Academia Quest",
+  title: "SkillForge",
   description: "Web LMS by Jhenna",
 };
 
