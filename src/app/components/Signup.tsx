@@ -44,7 +44,7 @@ const Signup: React.FC = () => {
   return (
     <>
       <div className="">
-        <div className="box-border border border-[#071e22] hover:border-[#007b75] bg-[#fbe9da] p-8 rounded-md h-[500px] w-[450px]">
+        <div className="box-border border border-[#071e22] hover:border-[#007b75] bg-[#F8F7F4] p-8 rounded-md h-[500px] w-[450px]">
           <h2 className="flex justify-center text-lg font-extrabold text-[#071e22]">
             Join SkillForge and build your skills!
           </h2>

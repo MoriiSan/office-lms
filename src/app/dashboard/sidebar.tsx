@@ -25,7 +25,7 @@ const App: React.FC = () => {
               />
               <div className="flex flex-col items-start justify-center">
                 <div className="text-sm font-bold">
-                  Jhenna Mariejoy Dela 
+                  Jhenna Mariejoy Dela Torre
                 </div>
                 <div className="text-xs font-normal">Student</div>
               </div>
@@ -110,13 +110,13 @@ const App: React.FC = () => {
               Achievements
             </div>
             <div className="border border-[#071e22] rounded-md p-3 ">
-              <div className="font-bold">Announcements</div>
+              <div className="font-semibold">Announcements</div>
               <div className="flex gap-3 py-3 ">
                 <FaUserCircle
                   size={30}
                   className=" cursor-pointer text-[#071e22]"
                 />
-                <div className="font-semibold">John Doe has created a new course</div>
+                <div className="">John Doe has created a new course</div>
               </div>
               <div></div>
             </div>
