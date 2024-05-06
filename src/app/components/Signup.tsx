@@ -44,7 +44,7 @@ const Signup: React.FC = () => {
   return (
     <>
       <div className="">
-        <div className="box-border border border-[#071e22] hover:border-[#007b75] bg-[#F8F7F4] p-8 rounded-md h-[500px] w-[450px]">
+        <div className="box-border border border-[#071e22] hover:border-[#3510bc] bg-[#F8F7F4] p-8 rounded-md h-[500px] w-[450px]">
           <h2 className="flex justify-center text-lg font-extrabold text-[#071e22]">
             Join SkillForge and build your skills!
           </h2>
@@ -57,7 +57,7 @@ const Signup: React.FC = () => {
                 <input
                   type=""
                   id=""
-                  className="w-full px-3 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#007b75] text-sm text-[#071e22] focus:text-[#071e22]"
+                  className="w-full px-3 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]"
                   placeholder="First Name"
                   value={fName}
                   onChange={(e) => setFname(e.target.value)}
@@ -68,7 +68,7 @@ const Signup: React.FC = () => {
                 <input
                   type=""
                   id=""
-                  className="w-full px-3 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#007b75] text-sm text-[#071e22] focus:text-[#071e22]"
+                  className="w-full px-3 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]"
                   placeholder="Last Name"
                   value={lName}
                   onChange={(e) => setLname(e.target.value)}
@@ -84,7 +84,7 @@ const Signup: React.FC = () => {
                 type="email"
                 className={`w-full px-3 ps-12 py-2 border ${
                   isEmailInvalid ? "border-[#ee2e31]" : "border-[#071e22]"
-                } bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#007b75] text-sm text-[#071e22] focus:text-[#071e22]`}
+                } bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]`}
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -107,7 +107,7 @@ const Signup: React.FC = () => {
               </span>
               <input
                 type={passwordInputType}
-                className="w-full px-3 ps-12 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#007b75] text-sm text-[#071e22] focus:text-[#071e22]"
+                className="w-full px-3 ps-12 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -135,8 +135,8 @@ const Signup: React.FC = () => {
             <button
               type="submit"
               disabled={isSubmitDisabled}
-              className={`w-full bg-[#007B75] text-sm text-white py-2 rounded-md ${
-                isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#006661]"
+              className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md ${
+                isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#3510bc]"
               } mt-2`}
               // title={isSubmitDisabled ? "Please fill out all fields" : ""}
               onClick={() => router.push("/dashboard")}
@@ -154,7 +154,7 @@ const Signup: React.FC = () => {
           <div className="gap-4">
             <button
               // type="submit"
-              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#007b75] hover:text-[#007b75]"
+              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
             >
               <span className="flex justify-center items-center mr-2">
                 <FcGoogle size={20} />
@@ -163,7 +163,7 @@ const Signup: React.FC = () => {
             </button>
             <button
               // type="submit"
-              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#007b75] hover:text-[#007b75]"
+              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
             >
               <span className="flex justify-center items-center mr-2">
                 <VscGithubInverted size={20} />

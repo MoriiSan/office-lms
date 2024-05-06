@@ -29,7 +29,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
   return (
     <>
       <nav
-        className={`sticky z-10 top-0 flex w-full flex-wrap items-center justify-between px-14 py-2 lg:py-4 
+        className={`sticky z-10 top-0 flex w-full flex-wrap items-center justify-between px-6 py-4
             ${
               scrolled
                 ? `border-b border-[#071e22] text-[#071e22] bg-[#F8F7F4]`
