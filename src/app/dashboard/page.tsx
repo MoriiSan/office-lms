@@ -13,6 +13,7 @@ import { RxDashboard } from "react-icons/rx";
 import { PiBooksLight } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { IoNotificationsOutline } from "react-icons/io5";
+import { BsRocketTakeoffFill } from "react-icons/bs";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 
 const App: React.FC = () => {
@@ -83,9 +84,14 @@ const App: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col rounded-md p-4 shadow border border-[#071e22] hover:bg-[#fac105]">
-                <div className="text-md font-bold mb-4">Upgrade to PRO</div>
-                <div className="text-xs">
+              <div className="flex flex-col rounded-md p-4 border border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
+                <div className="flex gap-2 items-center text-lg font-bold mb-2">
+                  <div>Upgrade to PRO</div>
+                  <div>
+                    <BsRocketTakeoffFill />
+                  </div>
+                </div>
+                <div className="text-sm">
                   Go deeper and learn job-ready skills. Practice with real-world
                   projects, take assessments, and earn certificates
                 </div>
