@@ -45,7 +45,7 @@ const App: React.FC = () => {
         <div className="free-popular-courses flex lg:min-h-[87vh] bg-[#3510bc] justify-center items-center text-white">
           free/popular courses
         </div>
-        <div className="signup-shortcut flex lg:min-h-[87vh] justify-center items-center">
+        <div className="signup-shortcut flex lg:min-h-[87vh] justify-center items-center text-[#071e22]">
           signup shortcut
         </div>
         <Footer />
