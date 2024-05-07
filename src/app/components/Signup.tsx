@@ -139,14 +139,14 @@ const Signup: React.FC = () => {
                 isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#3510bc]"
               } mt-2`}
               // title={isSubmitDisabled ? "Please fill out all fields" : ""}
-              onClick={() => router.push("/dashboard")}
+              onClick={() => router.push("/learn/dashboard")}
             >
               Start Learning
             </button>
             <div className="flex justify-center items-center gap-2 text-[#679289]">
               <div>-</div>
               <div className="flex justify-center text-sm text-[#679289] my-2">
-                or
+                or sign up using 
               </div>
               <div>-</div>
             </div>

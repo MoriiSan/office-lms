@@ -1,14 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../../../app/components/Navbar";
+import Footer from "../../../app/components/Footer";
 import { FaUserCircle } from "react-icons/fa";
-import ResumeIcon from "../../../public/assets/icons/resume";
-import { RxDashboard } from "react-icons/rx";
-import { PiBooksLight } from "react-icons/pi";
-import { IoSettingsOutline } from "react-icons/io5";
-import { IoNotificationsOutline } from "react-icons/io5";
+import ResumeIcon from "../../../../public/assets/icons/resume";
 
 const App: React.FC = () => {
   return (
@@ -57,7 +53,7 @@ const App: React.FC = () => {
                 </button>
               </div>
 
-              <div className=""> 
+              <div className="">
                 <div className="font-bold text-2xl mb-2">Start Learning</div>
                 <div className="flex small-cardds text-sm gap-4">
                   <div className="single-card flex flex-col flex-1 w-[250px] h-[270px] cursor-pointer">

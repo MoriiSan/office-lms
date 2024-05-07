@@ -1,14 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../../../app/components/Navbar";
+import Footer from "../../../app/components/Footer";
 import { FaUserCircle } from "react-icons/fa";
-import ResumeIcon from "../../../public/assets/icons/resume";
-import BookmarkIcon from "../../../public/assets/icons/bookmark";
-import DashboardIcon from "../../../public/assets/icons/dashboard";
-import BooksIcon from "../../../public/assets/icons/books";
-import SettingsIcon from "../../../public/assets/icons/settings";
+import ResumeIcon from "../../../../public/assets/icons/resume";
 import { RxDashboard } from "react-icons/rx";
 import { PiBooksLight } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -85,18 +81,17 @@ const App: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col rounded-md p-4 border border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
-                <div className="flex gap-2 items-center text-lg font-bold mb-2">
+                <div className="flex gap-2 items-center text-md font-bold mb-2">
                   <div>Upgrade to PRO</div>
                   <div>
                     <BsRocketTakeoffFill />
                   </div>
                 </div>
-                <div className="text-sm">
-                  Go deeper and learn job-ready skills. Practice with real-world
-                  projects, take assessments, and earn certificates
+                <div className="text-xs">
+                Level up with practical skills. Dive into real projects, assessments, and certifications.
                 </div>
                 <div></div>
-                <button className="flex w-full justify-center rounded-md mt-4 py-3 px-6 text-sm bg-[#071e22] text-[#F8F7F4]">
+                <button className="flex w-full justify-center rounded-md mt-4 py-3 px-6 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]">
                   Upgrade
                 </button>
               </div>

@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { GoChevronDown } from "react-icons/go";
-import { FaUserCircle } from "react-icons/fa"; // Import the icon you want to use for the dashboard page
 import { useRouter } from "next/navigation";
+import Login from "./Login";
 
 interface NavbarProps {
   isDashboardPage?: boolean; // Define a prop to indicate whether the current page is the dashboard page
@@ -12,6 +12,15 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  const handleLoginClick = () => {
+    setLoginOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setLoginOpen(false);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,13 +79,17 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
               </div>
             ) : (
               // Render the login button for other pages
-              <div className="hover:bg-[#F1DFD0] rounded-md py-2 px-3 hover:text-[#007b75] text-sm font-bold">
+              <div
+                className="cursor-pointer hover:bg-[#fac105] rounded py-2 px-3 hover:text-[#071e22] text-sm font-bold"
+                onClick={handleLoginClick}
+              >
                 Log In
               </div>
             )}
           </div>
         </div>
       </nav>
+      <Login isOpen={loginOpen} onClose={handleCloseModal} />
     </>
   );
 };
