@@ -19,24 +19,27 @@ const App: React.FC = () => {
         <Navbar isDashboardPage={true} />
         <div className="flex flex-grow justify-start items-stretch mx-6 my-4">
           {/* px-16 py-4 */}
-          <div className="sidebar-component flex flex-col flex-wrap p-4 w-[300px] min-w-[250px]  border-r-[#071e22] bg-[#F8F7F4] text-[#071e22] ">
+          <div className="sidebar-component flex flex-col flex-wrap w-[300px] min-w-[250px]  border-r-[#071e22] bg-[#F8F7F4] text-[#071e22] ">
             {/* h-screen fixed top-[72px]  */}
-            <div className="profile-component items-center flex gap-4 text-[#071e22]">
-              <FaUserCircle
-                size={40}
-                className=" cursor-pointer text-[#071e22]"
-              />
-              <div className="flex flex-col items-start justify-center">
-                <div className="text-sm font-bold">
-                  Jhenna Mariejoy Dela Torre
-                </div>
-                <div className="text-sm font-normal text-[#887d59]">
-                  Student
+            <div className="profile-component cursor-pointer flex flex-col mx-4 my-0 px-4 py-2.5 rounded-md text-[#071e22] bg-[#e7e4da] border-[#071e22]">
+              <div className="flex flex-row justify-between items-center gap-3">
+                <FaUserCircle
+                  size={35}
+                  className=" cursor-pointer text-[#071e22]"
+                />
+                <div className="flex flex-col items-start justify-center gap-1">
+                  <div className="text-sm font-bold">
+                    Jhenna Mariejoy Dela Torre
+                  </div>
+                  <div className="flex text-[11px] justify-center items-center font-normal rounded-xl px-2.5 py-0.5 bg-[#fac105] text-[#071e22]">
+                    Student
+                  </div>
                 </div>
               </div>
+              {/* <div className="flex">Progress</div> */}
             </div>
-            <div className="flex flex-col h-[78vh] justify-between">
-              <div className="flex flex-col gap text-md font-normal text-[#071e22] mt-6">
+            <div className="flex flex-col p-4 h-[80vh] justify-between">
+              <div className="flex flex-col gap text-md font-normal text-[#071e22]">
                 <div className="flex justify-between my-2 text-xs font-semibold">
                   <div>MENU</div>
                   <div className="text-[#887d59] cursor-pointer">
@@ -80,7 +83,7 @@ const App: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="flex flex-col rounded-md p-4 border border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
+              <div className="flex flex-col rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
                 <div className="flex gap-2 items-center text-md font-bold mb-2">
                   <div>Upgrade to PRO</div>
                   <div>
@@ -88,7 +91,8 @@ const App: React.FC = () => {
                   </div>
                 </div>
                 <div className="text-xs">
-                Level up with practical skills. Dive into real projects, assessments, and certifications.
+                  Level up with practical skills. Dive into real projects,
+                  assessments, and certifications.
                 </div>
                 <div></div>
                 <button className="flex w-full justify-center rounded-md mt-4 py-3 px-6 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]">

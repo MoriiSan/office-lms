@@ -80,7 +80,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
             ) : (
               // Render the login button for other pages
               <div
-                className="cursor-pointer hover:bg-[#fac105] rounded py-2 px-3 hover:text-[#071e22] text-sm font-bold"
+                className="cursor-pointer hover:bg-[#fac105] rounded py-2 px-4 hover:text-[#071e22] text-sm font-bold"
                 onClick={handleLoginClick}
               >
                 Log In
