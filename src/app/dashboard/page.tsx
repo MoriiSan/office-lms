@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
-import Navbar from "../../../app/components/Navbar";
-import Footer from "../../../app/components/Footer";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import { FaUserCircle } from "react-icons/fa";
-import ResumeIcon from "../../../../public/assets/icons/resume";
+import ResumeIcon from "../../../public/assets/icons/resume";
 import { RxDashboard } from "react-icons/rx";
 import { PiBooksLight } from "react-icons/pi";
 import { IoSettingsOutline } from "react-icons/io5";

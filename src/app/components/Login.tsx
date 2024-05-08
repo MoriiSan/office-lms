@@ -117,7 +117,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#3510bc]"
                 } `}
                 // title={isSubmitDisabled ? "Please fill out all fields" : ""}
-                onClick={() => router.push("/learn/dashboard")}
+                onClick={() => router.push("/dashboard")}
               >
                 Log In
               </button>
