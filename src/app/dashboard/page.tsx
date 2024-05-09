@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { FaUserCircle } from "react-icons/fa";
@@ -12,7 +14,11 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { BsRocketTakeoffFill } from "react-icons/bs";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 
-const App: React.FC = () => {
+const App: React.FC = async () => {
+  const session = await getServerSession();
+  if (!session) {
+    redirect("/");
+  }
   return (
     <>
       <div className=" flex flex-col h-auto bg-[#F8F7F4] text-[#071e22] ">
@@ -30,6 +36,8 @@ const App: React.FC = () => {
                 <div className="flex flex-col items-start justify-center gap-1">
                   <div className="text-sm font-bold">
                     Jhenna Mariejoy Dela Torre
+                    {session.user?.name}
+                    {session.user?.email}
                   </div>
                   <div className="flex text-[11px] justify-center items-center font-normal rounded-xl px-2.5 py-0.5 bg-[#fac105] text-[#071e22]">
                     Student

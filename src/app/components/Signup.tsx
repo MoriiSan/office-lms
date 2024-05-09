@@ -12,6 +12,7 @@ import ValidIcon from "../../../public/assets/icons/valid";
 import { FcGoogle } from "react-icons/fc";
 import { VscGithubInverted } from "react-icons/vsc";
 import UsernameIcon from "../../../public/assets/icons/username";
+import TerminalLoader from "../loading";
 
 const Signup: React.FC = () => {
   const router = useRouter();
@@ -19,18 +20,16 @@ const Signup: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  const [message, setMessage] = useState("");
-  const [pending, setPending] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(e: React.FormEvent) {
-    console.log("inside handleSubmit");
     e.preventDefault();
     if (!fullName || !email || !password) {
-      setMessage("Must provide all the credentials.");
+      setError("Must provide all the credentials.");
     }
     try {
-      setPending(true);
+      setIsLoading(true);
       const res = await fetch(`/api/register`, {
         method: "POST",
         headers: {
@@ -40,17 +39,17 @@ const Signup: React.FC = () => {
       });
       const createUser = await res.json();
       if (res.ok) {
-        setPending(false);
+        setIsLoading(false);
         const form = e.target as HTMLFormElement;
         form.reset();
-        setMessage(createUser.message);
+        setError(createUser.message);
       } else {
-        setMessage(createUser.message);
-        setPending(false);
+        setError(createUser.message);
+        setIsLoading(false);
       }
     } catch (error) {
-      setPending(false);
-      setMessage("Something went wrong.");
+      setIsLoading(false);
+      setError("Something went wrong.");
     }
   }
 
@@ -69,6 +68,10 @@ const Signup: React.FC = () => {
   const isEmailInvalid = email && !isEmailValid(email);
 
   const isSubmitDisabled = !(email && password && fullName);
+
+  if (isLoading) {
+    return <TerminalLoader />;
+  }
 
   return (
     <>
@@ -158,7 +161,7 @@ const Signup: React.FC = () => {
                 <u className="cursor-pointer">Privacy Policy</u>.
               </span>
             </div>
-            {message && <span className="message">{message}</span>}
+            {error && <span className="error">{error}</span>}
             <button
               type="submit"
               // disabled={isSubmitDisabled}
@@ -166,7 +169,7 @@ const Signup: React.FC = () => {
                 isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#3510bc]"
               } mt-2`}
               // title={isSubmitDisabled ? 'Please fill out all fields' : ''}
-              // onClick={() => router.push("/dashboard")}
+              onClick={() => router.push("/dashboard")}
             >
               Start Learning
             </button>
