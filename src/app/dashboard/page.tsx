@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import Navbar from "../components/Navbar";
@@ -14,11 +14,8 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { BsRocketTakeoffFill } from "react-icons/bs";
 import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
 
-const App: React.FC = async () => {
-  // const session = await getServerSession();
-  // if (!session) {
-  //   redirect("/");
-  // }
+const Dashboard =  () => {
+
   return (
     <>
       <div className=" flex flex-col h-auto bg-[#F8F7F4] text-[#071e22] ">
@@ -239,4 +236,4 @@ const App: React.FC = async () => {
   );
 };
 
-export default App;
+export default Dashboard;

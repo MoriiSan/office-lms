@@ -1,15 +1,17 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
-import { GoChevronDown } from "react-icons/go";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import Login from "./Login";
+
+import { GoChevronDown } from "react-icons/go";
 
 interface NavbarProps {
   isDashboardPage?: boolean; // Define a prop to indicate whether the current page is the dashboard page
 }
 
 const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
+  const { data: session }: any = useSession();
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
@@ -30,8 +32,17 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
 
     window.addEventListener("scroll", handleScroll);
 
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
 
@@ -73,7 +84,9 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
               // Render the user icon for the dashboard page
               <div
                 className="flex gap-4 cursor-pointer"
-                onClick={() => router.push("/")}
+                onClick={() => {
+                  signOut();
+                }}
               >
                 Logout
               </div>
@@ -95,3 +108,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
 };
 
 export default Navbar;
+
+// {
+//   !session ? <></> : <></>;
+// }

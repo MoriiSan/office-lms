@@ -15,18 +15,12 @@ import UsernameIcon from "../../../public/assets/icons/username";
 import TerminalLoader from "../loading";
 import Login from "./Login";
 
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const Signup: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const Signup: React.FC = () => {
   const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  // const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
@@ -38,48 +32,83 @@ const Signup: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     setLoginOpen(false);
   };
 
+  const isEmailValid = (email: string) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(email);
+  };
 
-  async function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!fullName || !email || !password) {
-      setError("Must provide all the credentials.");
+    const fullName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+
+    if (!isEmailValid(email)) {
+      setError("Email is invalid.");
+      return;
     }
+
+    if (!password) {
+      setError("Password is invalid.");
+      return;
+    }
+
     try {
-      setIsPending(true);
-      const res = await fetch(`/api/register`, {
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ fullName, email, password }),
       });
-      const createUser = await res.json();
-      if (res.ok) {
-        setIsPending(false);
-        const form = e.target as HTMLFormElement;
-        form.reset();
-        setError(createUser.message);
-      } else {
-        setError(createUser.message);
-        setIsPending(false);
+      if (res.status === 400) {
+        setError("This email is already registered.");
+      }
+      if (res.status === 200) {
+        setError("");
+        setLoginOpen(true);
       }
     } catch (error) {
-      setIsPending(false);
-      setError("Something went wrong.");
+      setError("Error, try again");
+      console.log(error);
     }
-  }
+  };
+
+  // async function handleSubmit(e: React.FormEvent) {
+  //   e.preventDefault();
+  //   if (!fullName || !email || !password) {
+  //     setError("Must provide all the credentials.");
+  //   }
+  //   try {
+  //     setIsPending(true);
+  //     const res = await fetch(`/api/register`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ fullName, email, password }),
+  //     });
+  //     const createUser = await res.json();
+  //     if (res.ok) {
+  //       setIsPending(false);
+  //       const form = e.target as HTMLFormElement;
+  //       form.reset();
+  //       setError(createUser.message);
+  //     } else {
+  //       setError(createUser.message);
+  //       setIsPending(false);
+  //     }
+  //   } catch (error) {
+  //     setIsPending(false);
+  //     setError("Something went wrong.");
+  //   }
+  // }
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   const passwordInputType = showPassword ? "text" : "password";
-
-  const isEmailValid = (email: string) => {
-    // Regular expression to validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
 
   const isEmailInvalid = email && !isEmailValid(email);
 
@@ -177,7 +206,7 @@ const Signup: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 <u className="cursor-pointer">Privacy Policy</u>.
               </span>
             </div>
-            {error && <span className="message">{error}</span>}
+            {error && <span className="message text-red-600 text-sm">{error}</span>}
             <button
               type="submit"
               disabled={isPending ? true : false}
@@ -185,7 +214,7 @@ const Signup: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#3510bc]"
               } mt-2`}
               // title={isSubmitDisabled ? 'Please fill out all fields' : ''}
-              onClick={() => router.push("/dashboard")}
+              // onClick={() => router.push("/dashboard")}
             >
               {isPending ? "Enrolling" : "Start Learning"}
             </button>

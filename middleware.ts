@@ -1,4 +1,11 @@
-export { default } from "next-auth/middleware";
+import { auth } from "./auth";
+
+export default auth((req: any) => {
+  const isLoggedIn = !!req.auth;
+  console.log("ROUTE: ", req.nextUrl.pathname);
+  console.log("IS LOGGEDIN: ", isLoggedIn);
+});
+
 export const config = {
-  matcher: ["/", "/dashboard/:path*"],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };

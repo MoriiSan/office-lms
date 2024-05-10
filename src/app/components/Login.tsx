@@ -1,6 +1,7 @@
-// Modal.tsx
+"use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 import EmailIcon from "../../../public/assets/icons/email";
 import PasswordIcon from "../../../public/assets/icons/password";
 import EyeIcon from "../../../public/assets/icons/eye";
@@ -10,8 +11,6 @@ import ValidIcon from "../../../public/assets/icons/valid";
 import { FcGoogle } from "react-icons/fc";
 import { VscGithubInverted } from "react-icons/vsc";
 import { GoX } from "react-icons/go";
-import { signIn, useSession } from "next-auth/react";
-import Link from "next/link";
 
 interface ModalProps {
   isOpen: boolean;
@@ -32,29 +31,50 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     return emailRegex.test(email);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError("Must provide all the credentials.");
+    const email = e.target[0].value;
+    const password = e.target[1].value;
+
+    if (!isEmailValid(email)) {
+      setError("Email is invalid.");
+      return;
     }
 
-    try {
-      setIsPending(true);
-      const res = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
-      if (res?.error) {
-        setError("Invalid Credentials");
-        setIsPending(false);
-        return;
-      }
-      router.replace("/dashboard");
-    } catch (error) {
-      setIsPending(false);
-      setError("Something went wrong.");
+    if (!password) {
+      setError("Password is invalid.");
+      return;
     }
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+    if (res?.error) {
+      setError("Invalid email or password");
+      if (res?.url) router.replace("/dashboard");
+    } else {
+      setError("");
+    }
+
+    // try {
+    //   setIsPending(true);
+    //   const res = await signIn("credentials", {
+    //     redirect: false,
+    //     email,
+    //     password,
+    //   });
+    //   if (res?.error) {
+    //     setError("Invalid Credentials");
+    //     setIsPending(false);
+    //     return;
+    //   }
+    //   router.replace("/dashboard");
+    // } catch (error) {
+    //   setIsPending(false);
+    //   setError("Something went wrong.");
+    // }
   };
 
   const togglePasswordVisibility = () => {
@@ -83,8 +103,8 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   type="email"
                   className={`w-full px-3 ps-12 py-2 border ${
                     !isEmailValid(email) // Only apply border color when email input is touched
-                      ? 'border-[#ee2e31]'
-                      : 'border-[#071e22]'
+                      ? "border-[#ee2e31]"
+                      : "border-[#071e22]"
                   } bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]`}
                   placeholder="Email address"
                   value={email}
@@ -96,13 +116,14 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 />
                 {isEmailValid(email) && emailInputActive ? ( // Display icon only if email is valid and input is touched
                   <span className="absolute h-4 w-4 top-1/2 translate-y-[-45%] right-3">
-                    <ValidIcon hex={'#007b75'} />
+                    <ValidIcon hex={"#007b75"} />
                   </span>
                 ) : emailInputActive ? ( // Display warning icon if input is touched but email is not valid
                   <span className="absolute h-4 w-4 top-1/2 translate-y-[-45%] right-3">
-                    <WarningIcon hex={'#ee2e31'} />
+                    <WarningIcon hex={"#ee2e31"} />
                   </span>
-                ) : null} {/* Do not display icon if input is not touched */}
+                ) : null}{" "}
+                {/* Do not display icon if input is not touched */}
               </div>
               <div className="relative mb-4">
                 <span className="absolute h-5 w-5 top-1/2 translate-y-[-45%] left-3">
@@ -131,7 +152,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 type="submit"
                 className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md
                  "cursor-not-allowed" : "hover:bg-[#3510bc]" `}
-                // onClick={() => router.push("/dashboard")}
+                onClick={() => router.push("/dashboard")}
               >
                 {isPending ? "Logging In" : "Log In"}
               </button>
