@@ -45,36 +45,20 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       setError("Password is invalid.");
       return;
     }
-
+    setIsPending(true);
     const res = await signIn("credentials", {
       redirect: false,
       email,
       password,
     });
+    setIsPending(false);
     if (res?.error) {
       setError("Invalid email or password");
+      setIsPending(false);
       if (res?.url) router.replace("/dashboard");
     } else {
       setError("");
     }
-
-    // try {
-    //   setIsPending(true);
-    //   const res = await signIn("credentials", {
-    //     redirect: false,
-    //     email,
-    //     password,
-    //   });
-    //   if (res?.error) {
-    //     setError("Invalid Credentials");
-    //     setIsPending(false);
-    //     return;
-    //   }
-    //   router.replace("/dashboard");
-    // } catch (error) {
-    //   setIsPending(false);
-    //   setError("Something went wrong.");
-    // }
   };
 
   const togglePasswordVisibility = () => {
