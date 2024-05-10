@@ -13,15 +13,31 @@ import { FcGoogle } from "react-icons/fc";
 import { VscGithubInverted } from "react-icons/vsc";
 import UsernameIcon from "../../../public/assets/icons/username";
 import TerminalLoader from "../loading";
+import Login from "./Login";
 
-const Signup: React.FC = () => {
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const Signup: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [isPending, setIsPending] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
+
+  const handleLoginClick = () => {
+    setLoginOpen(true);
+  };
+  const handleCloseModal = () => {
+    setLoginOpen(false);
+  };
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -29,7 +45,7 @@ const Signup: React.FC = () => {
       setError("Must provide all the credentials.");
     }
     try {
-      setIsLoading(true);
+      setIsPending(true);
       const res = await fetch(`/api/register`, {
         method: "POST",
         headers: {
@@ -39,16 +55,16 @@ const Signup: React.FC = () => {
       });
       const createUser = await res.json();
       if (res.ok) {
-        setIsLoading(false);
+        setIsPending(false);
         const form = e.target as HTMLFormElement;
         form.reset();
         setError(createUser.message);
       } else {
         setError(createUser.message);
-        setIsLoading(false);
+        setIsPending(false);
       }
     } catch (error) {
-      setIsLoading(false);
+      setIsPending(false);
       setError("Something went wrong.");
     }
   }
@@ -69,9 +85,9 @@ const Signup: React.FC = () => {
 
   const isSubmitDisabled = !(email && password && fullName);
 
-  if (isLoading) {
-    return <TerminalLoader />;
-  }
+  // if (isPending) {
+  //   return <TerminalLoader />;
+  // }
 
   return (
     <>
@@ -161,17 +177,17 @@ const Signup: React.FC = () => {
                 <u className="cursor-pointer">Privacy Policy</u>.
               </span>
             </div>
-            {error && <span className="error">{error}</span>}
+            {error && <span className="message">{error}</span>}
             <button
               type="submit"
-              // disabled={isSubmitDisabled}
+              disabled={isPending ? true : false}
               className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md ${
                 isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#3510bc]"
               } mt-2`}
               // title={isSubmitDisabled ? 'Please fill out all fields' : ''}
               onClick={() => router.push("/dashboard")}
             >
-              Start Learning
+              {isPending ? "Enrolling" : "Start Learning"}
             </button>
             <div className="flex justify-center items-center gap-2 text-[#679289]">
               <div>-</div>
@@ -200,9 +216,19 @@ const Signup: React.FC = () => {
               </span>
               Continue with Github
             </button>
+            <div className="flex justify-center mt-2 gap-2 text-xs text-[#679289] ">
+              <div>Already have an account?</div>
+              <button
+                className="text-[#071e22] font-medium"
+                onClick={handleLoginClick}
+              >
+                Log in here.
+              </button>
+            </div>
           </div>
         </div>
       </div>
+      <Login isOpen={loginOpen} onClose={handleCloseModal} />
     </>
   );
 };
