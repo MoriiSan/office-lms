@@ -36,9 +36,8 @@ const App: React.FC = async () => {
                 <div className="flex flex-col items-start justify-center gap-1">
                   <div className="text-sm font-bold">
                     Jhenna Mariejoy Dela Torre
-                    {/* {session.user?.name}
-                    {session.user?.email} */}
                   </div>
+                  {/* <div className="text-sm">{session.user?.email}</div> */}
                   <div className="flex text-[11px] justify-center items-center font-normal rounded-xl px-2.5 py-0.5 bg-[#fac105] text-[#071e22]">
                     Student
                   </div>
