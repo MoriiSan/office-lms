@@ -19,11 +19,11 @@ const Dashboard = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  // useEffect(() => {
-  //   if (!session) {
-  //     router.replace("/");
-  //   }
-  // }, [session, router]);
+  useEffect(() => {
+    if (!session) {
+      router.push("/");
+    }
+  }, [session, router]);
 
   console.log("Session:", session);
 
