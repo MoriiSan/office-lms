@@ -74,36 +74,6 @@ const Signup: React.FC = () => {
     }
   };
 
-  // async function handleSubmit(e: React.FormEvent) {
-  //   e.preventDefault();
-  //   if (!fullName || !email || !password) {
-  //     setError("Must provide all the credentials.");
-  //   }
-  //   try {
-  //     setIsPending(true);
-  //     const res = await fetch(`/api/register`, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ fullName, email, password }),
-  //     });
-  //     const createUser = await res.json();
-  //     if (res.ok) {
-  //       setIsPending(false);
-  //       const form = e.target as HTMLFormElement;
-  //       form.reset();
-  //       setError(createUser.message);
-  //     } else {
-  //       setError(createUser.message);
-  //       setIsPending(false);
-  //     }
-  //   } catch (error) {
-  //     setIsPending(false);
-  //     setError("Something went wrong.");
-  //   }
-  // }
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -114,9 +84,6 @@ const Signup: React.FC = () => {
 
   const isSubmitDisabled = !(email && password && fullName);
 
-  // if (isPending) {
-  //   return <TerminalLoader />;
-  // }
 
   return (
     <>

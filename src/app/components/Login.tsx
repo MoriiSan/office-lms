@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react"; // Import useRef
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import EmailIcon from "../../../public/assets/icons/email";
@@ -25,6 +25,15 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [emailInputActive, setEmailInputActive] = useState(false);
+  const emailInputRef = useRef<HTMLInputElement>(null); // Create ref for email input
+
+  useEffect(() => {
+    if (isOpen) {
+      if (emailInputRef.current) {
+        emailInputRef.current.focus();
+      }
+    }
+  }, [isOpen]);
 
   const isEmailValid = (email: string) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -84,6 +93,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   <EmailIcon hex={"#071e22"} />
                 </span>
                 <input
+                  ref={emailInputRef} // Add ref to email input
                   type="email"
                   className={`w-full px-3 ps-12 py-2 border ${
                     !isEmailValid(email) // Only apply border color when email input is touched
@@ -106,8 +116,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   <span className="absolute h-4 w-4 top-1/2 translate-y-[-45%] right-3">
                     <WarningIcon hex={"#ee2e31"} />
                   </span>
-                ) : null}{" "}
-                {/* Do not display icon if input is not touched */}
+                ) : null}
               </div>
               <div className="relative mb-4">
                 <span className="absolute h-5 w-5 top-1/2 translate-y-[-45%] left-3">
@@ -158,6 +167,9 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <button
                 // type="submit"
                 className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+                onClick={async () =>
+                  await signIn("google", { callbackUrl: "/dashboard" })
+                }
               >
                 <span className="flex justify-center items-center mr-2">
                   <FcGoogle size={20} />
@@ -167,6 +179,9 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <button
                 // type="submit"
                 className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+                onClick={async () =>
+                  await signIn("github", { callbackUrl: "/dashboard" })
+                }
               >
                 <span className="flex justify-center items-center mr-2">
                   <VscGithubInverted size={20} />
@@ -188,7 +203,6 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       )}
     </>
   );
-  // );
 };
 
 export default Login;

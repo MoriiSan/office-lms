@@ -6,17 +6,27 @@ import TerminalLoader from "./loading";
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const App: React.FC = () => {
+  const router = useRouter();
+  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000);
+    }, 500);
 
     return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session, router]);
 
   if (isLoading) {
     return <TerminalLoader />;
