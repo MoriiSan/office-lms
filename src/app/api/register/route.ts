@@ -1,4 +1,3 @@
-import type { NextApiRequest } from "next";
 import { connectDB } from "@/utils/connect";
 import User from "@/models/userModel";
 import bcrypt from "bcryptjs";

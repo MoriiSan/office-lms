@@ -35,15 +35,23 @@ export const authOptions: any = {
     }),
 
     GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+      clientId: process.env.GITHUB_ID || "",
+      clientSecret: process.env.GITHUB_SECRET || "",
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: process.env.GOOGLE_CLIENT_ID || "",
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
     }),
-    // ...add more providers here
+    
   ],
+  // callbacks: {
+  //   async session({ session, token, user}){
+  //     session.accessToken = token.accessToken
+  //     session.user.id = token.id
+
+  //     return session
+  //   }
+  // }
 };
 
 export const handler = NextAuth(authOptions);

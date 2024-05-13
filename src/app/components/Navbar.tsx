@@ -81,7 +81,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
             {isDashboardPage ? (
               // Render the user icon for the dashboard page
               <div
-                className="flex gap-4 cursor-pointer"
+                className="cursor-pointer hover:bg-[#fac105] rounded py-2 px-4 hover:text-[#071e22] text-sm font-bold"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
                 Logout

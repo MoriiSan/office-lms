@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import EmailIcon from "../../../public/assets/icons/email";
 import PasswordIcon from "../../../public/assets/icons/password";

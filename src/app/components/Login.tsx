@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react"; // Import useRef
+import React, { useEffect, useState, useRef } from "react"; 
 import { useRouter } from "next/navigation";
 import { signIn, useSession } from "next-auth/react";
 import EmailIcon from "../../../public/assets/icons/email";
@@ -25,7 +25,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [emailInputActive, setEmailInputActive] = useState(false);
-  const emailInputRef = useRef<HTMLInputElement>(null); // Create ref for email input
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -145,7 +145,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 type="submit"
                 className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md
                  "cursor-not-allowed" : "hover:bg-[#3510bc]" `}
-                onClick={() => router.push("/dashboard")}
+                // onClick={() => router.push("/dashboard")}
               >
                 {isPending ? "Logging In" : "Log In"}
               </button>
