@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   return (
     <>
-      {status === "authenticated" ? (
+      {status === "loading" ? (
         <TerminalLoader />
       ) : (
         session && (
