@@ -10,7 +10,7 @@ export const POST = async (req: any) => {
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    return new NextResponse("Email is already in use.", { status: 400 });
+    return NextResponse.json("Email is already in use.", { status: 400 });
   }
 
   const hashedPassword = await bcrypt.hash(password, 5);
@@ -22,9 +22,9 @@ export const POST = async (req: any) => {
 
   try {
     await newUser.save();
-    return new NextResponse("User successfully registered.", { status: 200 }); 
+    return NextResponse.json("User successfully registered.", { status: 200 });
   } catch (err: any) {
-    return new NextResponse(err, {
+    return NextResponse.json(err, {
       status: 500,
     });
   }

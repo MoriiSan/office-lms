@@ -14,7 +14,7 @@ import UsernameIcon from "../../../public/assets/icons/username";
 import TerminalLoader from "../loading";
 import Login from "./Login";
 
-const Signup: React.FC = () => {
+const Signup = () => {
   const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
