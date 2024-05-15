@@ -7,11 +7,9 @@ import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 const App: React.FC = () => {
   const router = useRouter();
-  const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -22,11 +20,11 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    if (session) {
-      router.push("/dashboard");
-    }
-  }, [session, router]);
+  // useEffect(() => {
+  //   if (session) {
+  //     router.push("/dashboard");
+  //   }
+  // }, [session, router]);
 
   if (isLoading) {
     return <TerminalLoader />;
@@ -40,7 +38,7 @@ const App: React.FC = () => {
           <div className=" carousel-component box-border flex flex-col rounded-md h-[500px] text-[#071e22] px-10 py-20 min-w-[450px]">
             <h1 className="bg-[#F8F7F4] py-2 px-2 font-sans text-6xl font-extrabold">
               Level Up Your Skills With
-              <text className="text-[#3510bc]"> SkillForge!</text>
+              <p className="text-[#3510bc]"> SkillForge!</p>
             </h1>
             <p className="bg-[#F8F7F4]  py-4 px-2 font-sans text-lg font-medium ">
               Begin a transformative journey with 6,900+ immersive quests,

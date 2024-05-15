@@ -53,6 +53,7 @@ const Signup = () => {
     }
 
     try {
+      setIsPending(true);
       const res = await fetch("/api/register", {
         method: "POST",
         headers: {
@@ -60,15 +61,21 @@ const Signup = () => {
         },
         body: JSON.stringify({ fullName, email, password }),
       });
-      if (res.status === 400) {
-        setError("This email is already registered.");
-      }
-      if (res.status === 200) {
-        setError("");
+      if (res.ok) {
+        setIsPending(false);
+        const form = e.target;
+        form.reset();
         setLoginOpen(true);
+        console.log("User successfully registered.");
+      } else {
+        const errorData = await res.json();
+        setError(errorData.message);
+        setIsPending(false);
       }
     } catch (error) {
-      setError("Error, try again");
+      setError("Something whent wrong. Try again");
+      setIsPending(false);
+      setIsPending(false);
       console.log(error);
     }
   };
@@ -82,7 +89,6 @@ const Signup = () => {
   const isEmailInvalid = email && !isEmailValid(email);
 
   const isSubmitDisabled = !(email && password && fullName);
-
 
   return (
     <>
@@ -172,7 +178,9 @@ const Signup = () => {
                 <u className="cursor-pointer">Privacy Policy</u>.
               </span>
             </div>
-            {error && <span className="message text-red-600 text-sm">{error}</span>}
+            {error && (
+              <span className="message text-red-600 text-sm">{error}</span>
+            )}
             <button
               type="submit"
               disabled={isPending ? true : false}

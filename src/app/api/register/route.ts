@@ -13,7 +13,7 @@ export const POST = async (req: any) => {
     return NextResponse.json("Email is already in use.", { status: 400 });
   }
 
-  const hashedPassword = await bcrypt.hash(password, 5);
+  const hashedPassword = await bcrypt.hash(password, 10);
   const newUser = new User({
     fullName,
     email,
@@ -22,7 +22,7 @@ export const POST = async (req: any) => {
 
   try {
     await newUser.save();
-    return NextResponse.json("User successfully registered.", { status: 200 });
+    return NextResponse.json("User successfully registered.", { status: 201 });
   } catch (err: any) {
     return NextResponse.json(err, {
       status: 500,
