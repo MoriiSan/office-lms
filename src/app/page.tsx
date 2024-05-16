@@ -20,12 +20,6 @@ const App: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // useEffect(() => {
-  //   if (session) {
-  //     router.push("/dashboard");
-  //   }
-  // }, [session, router]);
-
   if (isLoading) {
     return <TerminalLoader />;
   }

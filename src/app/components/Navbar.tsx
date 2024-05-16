@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Login from "./Login";
@@ -6,10 +7,10 @@ import { GoChevronDown } from "react-icons/go";
 import { signOut } from "next-auth/react";
 
 interface NavbarProps {
-  isDashboardPage?: boolean;
+  isLandingPage?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
+const Navbar: React.FC<NavbarProps> = ({ isLandingPage = true }) => {
   const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
@@ -78,7 +79,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDashboardPage = false }) => {
             </div>
           </div>
           <div className="flex gap-4">
-            {isDashboardPage ? (
+            {!isLandingPage ? (
               // Render the user icon for the dashboard page
               <div
                 className="cursor-pointer hover:bg-[#fac105] rounded py-2 px-4 hover:text-[#071e22] text-sm font-bold"

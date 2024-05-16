@@ -1,19 +1,23 @@
 import mongoose from "mongoose";
 
+// IMPORTANT!!
+// Always restart the project from the terminal,
+// so that the data saves in the designated COLLECTTION
+
 const userSchema = new mongoose.Schema(
   {
     fullName: {
       type: String,
-      required: [true, "Must provide a name."],
+      required: true,
     },
     email: {
       type: String,
-      required: [true, "Must provide an email."],
-      unique: [true, "Must be unique"],
+      required: true,
+      unique: true,
     },
     password: {
       type: String,
-      required: [true, "Must provide a password."],
+      required: true,
     },
   },
   {
@@ -21,5 +25,5 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.models.User || mongoose.model("User", userSchema);
-
+export default mongoose.models.User ||
+  mongoose.model("User", userSchema, "users");
