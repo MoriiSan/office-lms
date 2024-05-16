@@ -20,7 +20,7 @@ const Sidebar = () => {
                 Jhenna Mariejoy Dela Torre
               </div>
               <div className="flex text-[11px] justify-center items-center font-normal rounded-xl px-2.5 py-0.5 bg-[#fac105] text-[#071e22]">
-                Student
+                Admin
               </div>
             </div>
           </div>
