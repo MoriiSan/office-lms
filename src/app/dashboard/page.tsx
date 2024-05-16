@@ -26,7 +26,7 @@ const Dashboard = () => {
         <div className="flex flex-grow justify-start items-stretch mx-6 my-4">
           {/* px-16 py-4 */}
 
-          <Sidebar currentPage={"dashboard"} />
+          <Sidebar />
 
           <div className="flex flex-1 overflow-y-auto bg-[#e7e4da] rounded-lg ">
             <div className="content-component flex flex-col flex-1 text-[#071e22] h-auto min-w-[530px] px-4">
