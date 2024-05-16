@@ -11,17 +11,21 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar-component flex flex-col flex-wrap w-[300px] min-w-[250px] border-r-[#071e22] bg-[#F8F7F4] text-[#071e22]">
-      <div className="profile-component cursor-pointer flex flex-col mx-4 my-0 px-4 py-2.5 rounded-md text-[#071e22] bg-[#e7e4da] border-[#071e22]">
-        <div className="flex flex-row justify-between items-center gap-3">
-          <FaUserCircle size={35} className="cursor-pointer text-[#071e22]" />
-          <div className="flex flex-col items-start justify-center gap-1">
-            <div className="text-sm font-bold">Jhenna Mariejoy Dela Torre</div>
-            <div className="flex text-[11px] justify-center items-center font-normal rounded-xl px-2.5 py-0.5 bg-[#fac105] text-[#071e22]">
-              Student
+      <Link href="/profile">
+        <div className="profile-component cursor-pointer flex flex-col mx-4 my-0 px-4 py-2.5 rounded-md text-[#071e22] bg-[#e7e4da] border-[#071e22]">
+          <div className="flex flex-row justify-between items-center gap-3">
+            <FaUserCircle size={35} className="cursor-pointer text-[#071e22]" />
+            <div className="flex flex-col items-start justify-center gap-1">
+              <div className="text-sm font-bold">
+                Jhenna Mariejoy Dela Torre
+              </div>
+              <div className="flex text-[11px] justify-center items-center font-normal rounded-xl px-2.5 py-0.5 bg-[#fac105] text-[#071e22]">
+                Student
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Link>
       <div className="flex flex-col p-4 h-[78vh] justify-between">
         <div className="flex flex-col gap text-md font-normal text-[#071e22]">
           <div className="flex justify-between my-2 text-xs font-semibold">
