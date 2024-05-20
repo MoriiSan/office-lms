@@ -84,6 +84,10 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-70 z-50">
           <div className="relative box-border border border-[#071e22] hover:border-[#3510bc] bg-[#F8F7F4] p-8 rounded-md h-auto w-[450px]">
+            <div className="absolute cursor-pointer right-7 top-7 text-black hover:text-red-500"
+            onClick={onClose}>
+              <GoX size={25} />
+            </div>
             <h2 className="flex justify-center text-2xl font-extrabold text-[#071e22]">
               Welcome Back!
             </h2>
@@ -175,7 +179,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <div className="gap-4">
               <button
                 data-testid="google-login-button"
-                className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+                className="flex items-center justify-center w-full border border-[#ff3e00] hover:bg-[#ffffff] text-sm text-[#ff3e00] py-2 mb-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
                 onClick={async () =>
                   await signIn("google", { callbackUrl: "/dashboard" })
                 }
@@ -186,8 +190,8 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 Continue with Google
               </button>
               <button
-                className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
-                onClick={async () =>
+              className="flex items-center justify-center w-full border border-[#772e9b] hover:bg-[#ffffff] text-sm text-[#772e9b] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+              onClick={async () =>
                   await signIn("github", { callbackUrl: "/dashboard" })
                 }
               >

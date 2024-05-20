@@ -87,8 +87,6 @@ const Signup = () => {
 
   const isEmailInvalid = email && !isEmailValid(email);
 
-  const isSubmitDisabled = !(email && password && fullName);
-
   return (
     <>
       <div className="">
@@ -100,6 +98,13 @@ const Signup = () => {
             Forge your path with SkillForge
           </p>
           <form onSubmit={handleSubmit}>
+            <div className="relative mb-4">
+              {error && (
+                <span className="error flex text-white text-sm w-full px-3 py-2 rounded-md bg-[#ee2e31]">
+                  {error}
+                </span>
+              )}
+            </div>
             <div className="relative mb-4">
               <span className="absolute h-6 w-6 top-1/2 translate-y-[-45%] left-3">
                 <UsernameIcon hex={"#071e22"} />
@@ -180,15 +185,11 @@ const Signup = () => {
                 <u className="cursor-pointer">Privacy Policy</u>.
               </span>
             </div>
-            {error && (
-              <span className="message text-red-600 text-sm">{error}</span>
-            )}
             <button
               data-testid="register-button"
               type="submit"
               disabled={isPending ? true : false}
-              className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md ${
-                isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#3510bc]"
+              className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md "cursor-not-allowed hover:bg-[#3510bc]"
               } mt-2`}
             >
               {isPending ? "Enrolling" : "Start Learning"}
@@ -204,7 +205,7 @@ const Signup = () => {
           <div className="gap-4">
             <button
               data-testid="google-login-button"
-              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+              className="flex items-center justify-center w-full border border-[#ff3e00] hover:bg-[#ffffff] text-sm text-[#ff3e00] py-2 mb-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
               onClick={async () =>
                 await signIn("google", { callbackUrl: "/dashboard" })
               }
@@ -215,7 +216,7 @@ const Signup = () => {
               Continue with Google
             </button>
             <button
-              className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+              className="flex items-center justify-center w-full border border-[#772e9b] hover:bg-[#ffffff] text-sm text-[#772e9b] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
               onClick={async () =>
                 await signIn("github", { callbackUrl: "/dashboard" })
               }

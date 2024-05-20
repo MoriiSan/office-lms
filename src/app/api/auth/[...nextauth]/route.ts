@@ -132,8 +132,6 @@ export const authOptions = {
 
       return user;
     },
-    // async createUser({ user, account }: { user: any; account: any }) {
-    // },
   },
 };
 
