@@ -11,11 +11,10 @@ import ValidIcon from "../../../public/assets/icons/valid";
 import { FcGoogle } from "react-icons/fc";
 import { VscGithubInverted } from "react-icons/vsc";
 import UsernameIcon from "../../../public/assets/icons/username";
-import TerminalLoader from "../loading";
 import Login from "./Login";
+import { signIn } from "next-auth/react";
 
 const Signup = () => {
-  const router = useRouter();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -106,6 +105,7 @@ const Signup = () => {
                 <UsernameIcon hex={"#071e22"} />
               </span>
               <input
+                data-testid="name-register-field"
                 type="text"
                 id="fullName"
                 className="w-full px-3 ps-12 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]"
@@ -122,6 +122,7 @@ const Signup = () => {
                 <EmailIcon hex={"#071e22"} />
               </span>
               <input
+                data-testid="email-register-field"
                 type="email"
                 id="email"
                 className={`w-full px-3 ps-12 py-2 border ${
@@ -150,6 +151,7 @@ const Signup = () => {
                 <PasswordIcon hex={"#071e22"} />
               </span>
               <input
+                data-testid="password-register-field"
                 type={passwordInputType}
                 id="password"
                 className="w-full px-3 ps-12 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]"
@@ -182,13 +184,12 @@ const Signup = () => {
               <span className="message text-red-600 text-sm">{error}</span>
             )}
             <button
+              data-testid="register-button"
               type="submit"
               disabled={isPending ? true : false}
               className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md ${
                 isSubmitDisabled ? "cursor-not-allowed" : "hover:bg-[#3510bc]"
               } mt-2`}
-              // title={isSubmitDisabled ? 'Please fill out all fields' : ''}
-              // onClick={() => router.push("/dashboard")}
             >
               {isPending ? "Enrolling" : "Start Learning"}
             </button>
@@ -202,8 +203,11 @@ const Signup = () => {
           </form>
           <div className="gap-4">
             <button
-              // type='submit'
+              data-testid="google-login-button"
               className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+              onClick={async () =>
+                await signIn("google", { callbackUrl: "/dashboard" })
+              }
             >
               <span className="flex justify-center items-center mr-2">
                 <FcGoogle size={20} />
@@ -211,8 +215,10 @@ const Signup = () => {
               Continue with Google
             </button>
             <button
-              // type='submit'
               className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+              onClick={async () =>
+                await signIn("github", { callbackUrl: "/dashboard" })
+              }
             >
               <span className="flex justify-center items-center mr-2">
                 <VscGithubInverted size={20} />

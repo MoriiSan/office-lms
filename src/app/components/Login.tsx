@@ -90,12 +90,21 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             <p className="flex justify-center text-[#071e22] mb-4">
               Log in to SkillForge
             </p>
+
             <form onSubmit={handleSubmit}>
+              <div className="relative mb-4">
+                {error && (
+                  <span className="error flex text-white text-sm w-full px-3 py-2 rounded-md bg-[#ee2e31]">
+                    {error}
+                  </span>
+                )}
+              </div>
               <div className="relative mb-4">
                 <span className="absolute h-6 w-6 top-1/2 translate-y-[-45%] left-3">
                   <EmailIcon hex={"#071e22"} />
                 </span>
                 <input
+                  data-testid="email-login-field"
                   ref={emailInputRef} // Add ref to email input
                   type="email"
                   className={`w-full px-3 ps-12 py-2 border ${
@@ -126,6 +135,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   <PasswordIcon hex={"#071e22"} />
                 </span>
                 <input
+                  data-testid="password-login-field"
                   type={passwordInputType}
                   className="w-full px-3 ps-12 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]"
                   placeholder="Password"
@@ -145,19 +155,14 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 </span>
               </div>
               <button
+                data-testid="login-button"
                 type="submit"
                 disabled={isPending ? true : false}
                 className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md
                  "cursor-not-allowed" : "hover:bg-[#3510bc]" `}
-                // onClick={() => router.push("/dashboard")}
               >
                 {isPending ? "Logging In" : "Log In"}
               </button>
-              {error && (
-                <span className="error text-[#ee2e31] text-sm mb-4">
-                  {error}
-                </span>
-              )}
 
               <div className="flex justify-center items-center gap-2 text-[#679289]">
                 <div>-</div>
@@ -169,7 +174,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
             </form>
             <div className="gap-4">
               <button
-                // type="submit"
+                data-testid="google-login-button"
                 className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 mb-4 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
                 onClick={async () =>
                   await signIn("google", { callbackUrl: "/dashboard" })
@@ -181,7 +186,6 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 Continue with Google
               </button>
               <button
-                // type="submit"
                 className="flex items-center justify-center w-full border border-[#071e22] bg-[#f1ede5] hover:bg-[#ffffff] text-sm text-[#071e22] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
                 onClick={async () =>
                   await signIn("github", { callbackUrl: "/dashboard" })
@@ -195,6 +199,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               <div className="flex justify-center mt-2 gap-2 text-xs text-[#679289] ">
                 <div>Don't have an account yet?</div>
                 <button
+                  data-testid="login-signup-button"
                   className="text-[#071e22] font-medium"
                   onClick={onClose}
                 >

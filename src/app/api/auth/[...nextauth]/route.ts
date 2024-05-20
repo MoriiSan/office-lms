@@ -4,10 +4,16 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import User from "@/models/userModel";
+import SSO_User from "@/models/SSOModel";
 import { connectDB } from "@/utils/connect";
 import { NextResponse } from "next/server";
 
-async function login(credentials: {email: string, password: string}) {
+interface SSO_User {
+  name: string;
+  email: string;
+}
+
+async function login(credentials: { email: string; password: string }) {
   try {
     const user = await User.findOne({ email: credentials.email });
     console.log("credentials:", credentials);
@@ -22,6 +28,19 @@ async function login(credentials: {email: string, password: string}) {
       }
     }
   } catch (error) {}
+}
+
+async function SSOlogin(email: SSO_User) {
+  try {
+    const user = await SSO_User.findOne({ email: email });
+    if (!user) {
+      console.log("SSO Log-In: User does not exist.");
+      return null;
+    }
+    return user;
+  } catch (error) {
+    console.log("SSO Login failed: ", error);
+  }
 }
 
 export const authOptions = {
@@ -60,7 +79,7 @@ export const authOptions = {
   callbacks: {
     async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
-        token.name = user.fullName;
+        token.name = user.name;
         token.email = user.email;
         token.id = user.id;
       }
@@ -69,13 +88,52 @@ export const authOptions = {
     },
     async session({ session, token }: { session: any; token: any }) {
       if (token) {
-        session.user.name = token.fullName;
+        session.user.name = token.name;
         session.user.email = token.email;
         session.user.id = token.id;
       }
       console.log("Session: ", session);
       return session;
     },
+    async signIn({ user, account }: { user: any; account: any }) {
+      // console.log("User: ", user);
+      // console.log("Account: ", account);
+
+      // if (account.provider === "google") {
+      //   await connectDB();
+      //   const userSSO = await SSOlogin(user.email);
+      //   if (!userSSO) {
+      //     return "/";
+      //   }
+      // }
+
+      if (account.provider === "google") {
+        const { name, email, image } = user;
+        try {
+          const res = await fetch("http://localhost:3000/api/registerSSO", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name,
+              email,
+              image,
+            }),
+          });
+          if (res.ok) {
+            console.log("New SSO login saved.");
+            return user;
+          }
+        } catch (error) {
+          console.log("Error SSO Log-In.", error);
+        }
+      }
+
+      return user;
+    },
+    // async createUser({ user, account }: { user: any; account: any }) {
+    // },
   },
 };
 

@@ -82,6 +82,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLandingPage = true }) => {
             {!isLandingPage ? (
               // Render the user icon for the dashboard page
               <div
+                data-testid="logout-button"
                 className="cursor-pointer hover:bg-[#fac105] rounded py-2 px-4 hover:text-[#071e22] text-sm font-bold"
                 onClick={() => signOut({ callbackUrl: "/" })}
               >
@@ -90,6 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLandingPage = true }) => {
             ) : (
               // Render the login button for other pages
               <div
+                data-testid="login-signup-button"
                 className="cursor-pointer hover:bg-[#fac105] rounded py-2 px-4 hover:text-[#071e22] text-sm font-bold"
                 onClick={handleLoginClick}
               >
