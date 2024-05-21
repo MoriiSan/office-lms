@@ -45,15 +45,16 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     const email = e.target[0].value;
     const password = e.target[1].value;
 
-    if (!isEmailValid(email)) {
-      setError("Email is invalid.");
-      return;
-    }
+    // if (!isEmailValid(email)) {
+    //   setError("Email is invalid.");
+    //   return;
+    // }
 
-    if (!password) {
-      setError("Password is invalid.");
-      return;
-    }
+    // if (!password) {
+    //   setError("Password is invalid.");
+    //   return;
+    // }
+    
     try {
       setIsPending(true);
       const res = await signIn("credentials", {

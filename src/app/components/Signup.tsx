@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import EmailIcon from "../../../public/assets/icons/email";
 import PasswordIcon from "../../../public/assets/icons/password";
 import EyeIcon from "../../../public/assets/icons/eye";
@@ -13,9 +12,10 @@ import { VscGithubInverted } from "react-icons/vsc";
 import UsernameIcon from "../../../public/assets/icons/username";
 import Login from "./Login";
 import { signIn } from "next-auth/react";
+import { toast } from "sonner";
 
 const Signup = () => {
-  const [fullName, setFullName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -37,7 +37,7 @@ const Signup = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const fullName = e.target[0].value;
+    const name = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
 
@@ -58,13 +58,21 @@ const Signup = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ fullName, email, password }),
+        body: JSON.stringify({ name, email, password }),
       });
       if (res.ok) {
         setIsPending(false);
         const form = e.target;
         form.reset();
         setLoginOpen(true);
+        toast.success("User successfully registered.", {
+          position: "top-center",
+          classNames: {
+            title: "text-green-600",
+            description: "text-green-600",
+            success: 'text-green-600',
+          }
+        })
         console.log("User successfully registered.");
       } else {
         const errorData = await res.json();
@@ -90,7 +98,7 @@ const Signup = () => {
   return (
     <>
       <div className="">
-        <div className="box-border border border-[#071e22] hover:border-[#3510bc] bg-[#F8F7F4] p-8 rounded-md h-[500px] w-[450px]">
+        <div className="box-border border border-[#071e22] hover:border-[#3510bc] bg-[#F8F7F4] p-8 rounded-md h-auto w-[450px]">
           <h2 className="flex justify-center text-lg font-extrabold text-[#071e22]">
             Join SkillForge and build your skills!
           </h2>
@@ -100,7 +108,7 @@ const Signup = () => {
           <form onSubmit={handleSubmit}>
             <div className="relative mb-4">
               {error && (
-                <span className="error flex text-white text-sm w-full px-3 py-2 rounded-md bg-[#ee2e31]">
+                <span className="error flex justify-start text-center text-white text-sm w-full px-3 py-2 rounded-md bg-red-500">
                   {error}
                 </span>
               )}
@@ -112,12 +120,12 @@ const Signup = () => {
               <input
                 data-testid="name-register-field"
                 type="text"
-                id="fullName"
+                id="name"
                 className="w-full px-3 ps-12 py-2 border border-[#071e22] bg-transparent focus:bg-transparent rounded-md focus:outline-none focus:border-[#3510bc] text-sm text-[#071e22] focus:text-[#071e22]"
                 placeholder="Full Name"
-                value={fullName}
+                value={name}
                 onChange={(e) => {
-                  setFullName(e.target.value);
+                  setName(e.target.value);
                 }}
                 required
               />

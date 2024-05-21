@@ -16,8 +16,8 @@ interface SSO_User {
 async function login(credentials: { email: string; password: string }) {
   try {
     const user = await User.findOne({ email: credentials.email });
-    console.log("credentials:", credentials);
-    console.log("user:", user);
+    // console.log("credentials:", credentials);
+    // console.log("user:", user);
     if (user) {
       const isPasswordCorrect = await bcrypt.compare(
         credentials.password,
@@ -25,7 +25,7 @@ async function login(credentials: { email: string; password: string }) {
       );
       if (isPasswordCorrect) {
         return user;
-      }
+      } 
     }
   } catch (error) {}
 }
@@ -83,7 +83,7 @@ export const authOptions = {
         token.email = user.email;
         token.id = user.id;
       }
-      console.log("Token: ", token);
+      // console.log("Token: ", token);
       return token;
     },
     async session({ session, token }: { session: any; token: any }) {
