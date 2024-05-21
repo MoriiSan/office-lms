@@ -41,15 +41,15 @@ const Signup = () => {
     const email = e.target[1].value;
     const password = e.target[2].value;
 
-    if (!isEmailValid(email)) {
-      setError("Email is invalid.");
-      return;
-    }
+    // if (!isEmailValid(email)) {
+    //   setError("Email is invalid.");
+    //   return;
+    // }
 
-    if (!password) {
-      setError("Password is invalid.");
-      return;
-    }
+    // if (!password) {
+    //   setError("Password is invalid.");
+    //   return;
+    // }
 
     try {
       setIsPending(true);
