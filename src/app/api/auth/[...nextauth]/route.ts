@@ -56,7 +56,7 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
-        await connectDB();
+        await connectDB("clientDB");
         try {
           const user = await login(credentials);
           return user;

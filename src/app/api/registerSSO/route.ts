@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (request: NextRequest) => {
   const { name, email, image } = await request.json();
 
-  await connectDB();
+  await connectDB("clientDB");
 
   await SSO_User.create({ name, email, image });
   return NextResponse.json(
