@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Navbar from "./components/Navbar";
 import "./globals.css";
-import { Toaster } from 'sonner';
+import { NextAuthProvider } from "./Provider";
+import { SidebarProvider } from "@/app/context/SidebarContext";
+
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,10 +18,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
-      <body className={inter.className}>{children}<Toaster theme="light"/></body>
+      <body className={inter.className}>
+        <NextAuthProvider>
+          <SidebarProvider>{children}</SidebarProvider>
+          <Toaster theme="light" />
+        </NextAuthProvider>
+      </body>
     </html>
   );
 }

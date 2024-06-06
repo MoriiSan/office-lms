@@ -4,21 +4,21 @@ import { PiBooksLight } from "react-icons/pi";
 import { IoSettingsOutline, IoNotificationsOutline } from "react-icons/io5";
 
 const MenuItems = [
-  { label: "Dashboard", icon: <RxDashboard size={23} />, href: "/dashboard" },
+  { label: "Dashboard", icon: <RxDashboard size={20} />, href: "/dashboard" },
   {
     label: "My Courses",
-    icon: <PiBooksLight size={25} />,
-    href: "/dashboard/mycourses",
+    icon: <PiBooksLight size={20} />,
+    href: "/mycourses",
   },
   {
     label: "Notifications",
-    icon: <IoNotificationsOutline size={24} />,
-    href: "/dashboard/notifications",
+    icon: <IoNotificationsOutline size={20} />,
+    href: "/notifications",
   },
   {
     label: "Settings",
-    icon: <IoSettingsOutline size={24} />,
-    href: "/dashboard/settings",
+    icon: <IoSettingsOutline size={20} />,
+    href: "/settings",
   },
 ];
 export default MenuItems;

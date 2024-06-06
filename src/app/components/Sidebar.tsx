@@ -1,59 +1,101 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FaUserCircle } from "react-icons/fa";
+import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
+import MenuItems from "./MenuItems";
+import { useSession } from "next-auth/react";
+import { useSidebar } from "../context/SidebarContext";
 import { BsRocketTakeoffFill } from "react-icons/bs";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
-import MenuItems from "./Links";
+
+{
+  /* I need to put the Sidebar component inside a div in order for its sticky position to work */
+}
 
 const Sidebar = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const { isCollapsed, toggleSidebar } = useSidebar();
 
   return (
-    <div className="sidebar-component flex flex-col flex-wrap w-[300px] min-w-[250px] border-r-[#071e22] bg-[#F8F7F4] text-[#071e22]">
-      <Link href="/profile">
-        <div className="profile-component cursor-pointer flex flex-col mx-4 my-0 px-4 py-2.5 rounded-md text-[#071e22] bg-[#e7e4da] border-[#071e22]">
-          <div className="flex flex-row justify-between items-center gap-3">
-            <FaUserCircle size={35} className="cursor-pointer text-[#071e22]" />
-            <div className="flex flex-col items-start justify-center gap-1">
-              <div className="text-sm font-bold">
-                Jhenna Mariejoy Dela Torre
-              </div>
-              <div className="flex text-[11px] justify-center items-center font-normal rounded-xl px-2.5 py-0.5 bg-[#fac105] text-[#071e22]">
-                Student
-              </div>
-            </div>
+    <aside
+      className={`sidebar-component sticky top-[88px] group flex flex-col justify-start ${
+        isCollapsed ? "min-w-[80px] " : "min-w-[260px]"
+      } bg-[#F8F7F4] text-[#071e22] transition-all duration-100`}
+    >
+      <Link href="/profile" className="mx-4 pb-4 border-b border-[#e7e4da]">
+        <div
+          className={`profile-component border-box min-h-[40px] flex items-center p-2 rounded text-[#071e22] bg-[#]`}
+        >
+          <div className="icon-component flex justify-center items-center p-1 px-1.5 bg-[#071e22] text-white font-bold rounded">
+            JD
           </div>
+          {!isCollapsed && (
+            <>
+              <div
+                className={`user-details overflow-hidden ml-2 transition-all  ${
+                  isCollapsed ? "w-0" : "w-full"
+                } `}
+              >
+                <div className="font-semibold text-xs">
+                  {session?.user?.name}
+                </div>
+                <div className="text-xs">{session?.user?.email}</div>
+              </div>
+            </>
+          )}
         </div>
       </Link>
-      <div className="flex flex-col p-4 h-[78vh] justify-between">
-        <div className="flex flex-col gap text-md font-normal text-[#071e22]">
-          <div className="flex justify-between my-2 text-xs font-semibold">
-            <div>MENU</div>
-            <div className="text-[#887d59] cursor-pointer">
-              <TbLayoutSidebarLeftCollapse size={16} />
-            </div>
+      <div className="flex flex-col mx-4 py-4 h-[76vh]">
+        <div className="flex flex-col gap-1 text-md font-normal text-[#071e22]">
+          {/* menu label */}
+          <div
+            className={`flex ${
+              isCollapsed ? "justify-center" : "justify-between"
+            } items-center text-xs text-gray-500 font-semibold`}
+          >
+            <div>{isCollapsed ? "" : "Menu"}</div>
+            <button
+              className="text-[#887d5957]  hover:text-[#887d59] font-light opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              onClick={toggleSidebar}
+            >
+              {isCollapsed ? (
+                <GoSidebarCollapse size={16} />
+              ) : (
+                <GoSidebarExpand size={16} />
+              )}
+            </button>
           </div>
+
+          {/* menu items */}
           {MenuItems.map((item) => (
             <Link href={item.href} key={item.href}>
-              <div
+              <ul
                 className={`${
                   pathname === item.href
                     ? "active bg-[#071e22] text-[#F8F7F4] hover:text-[#fac105] font-medium"
-                    : "hover:bg-[#e7e4da] text-[#887d59] font-medium hover:text-[#4014e4]"
-                } relative cursor-pointer flex mb-2 rounded-md text-sm`}
+                    : "hover:bg-[#071e2218] text-gray-700 font-medium hover:text-[#4014e4]"
+                } relative h-[40px] flex cursor-pointer rounded text-sm transition-colors`}
               >
-                <div className="flex flex-1 py-3 px-6 justify-start items-center">
+                <div
+                  className={`flex flex-grow flex-row py-2.5 px-3.5 ${
+                    isCollapsed ? "" : "justify-start"
+                  }  items-center`}
+                >
                   <span className="relative h-5 w-5 flex justify-center items-center">
                     {item.icon}
                   </span>
-                  <p className="relative ms-2">{item.label}</p>
+                  {!isCollapsed && (
+                    <p className="relative ms-2">{item.label}</p>
+                  )}
                 </div>
-              </div>
+              </ul>
             </Link>
           ))}
         </div>
-        <div className="flex flex-col rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
+      </div>
+      {/* <div className="flex flex-col rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
           <div className="flex gap-2 items-center text-md font-bold mb-2">
             <div>Upgrade to PRO</div>
             <div>
@@ -67,9 +109,8 @@ const Sidebar = () => {
           <button className="flex w-full justify-center rounded-md mt-4 py-2 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]">
             Upgrade
           </button>
-        </div>
-      </div>
-    </div>
+        </div> */}
+    </aside>
   );
 };
 
