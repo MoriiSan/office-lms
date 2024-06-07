@@ -5,12 +5,15 @@ import { NextRequest, NextResponse } from "next/server";
 // Get a single course
 export const GET = async (
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { title: string } }
 ) => {
   await connectDB("adminDB");
 
   try {
-    const course = await Course.findById(params.id);
+    const course = await Course.findOne({
+      title: params.title,
+      isPublished: true,
+    });
     if (!course) {
       return NextResponse.json(
         { message: "Course not found" },

@@ -92,7 +92,7 @@ export const authOptions = {
         session.user.email = token.email;
         session.user.id = token.id;
       }
-      console.log("Session: ", session);
+      // console.log("Session: ", session);
       return session;
     },
     async signIn({ user, account }: { user: any; account: any }) {
@@ -122,7 +122,7 @@ export const authOptions = {
             }),
           });
           if (res.ok) {
-            console.log("New SSO login saved.");
+            // console.log("New SSO login saved.");
             return user;
           }
         } catch (error) {

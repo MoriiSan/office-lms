@@ -6,15 +6,7 @@ import Sidebar from "../../components/Sidebar";
 import Footer from "../../components/Footer";
 import { FaUserCircle } from "react-icons/fa";
 import ResumeIcon from "../../../../public/assets/icons/resume";
-import { RxDashboard } from "react-icons/rx";
-import { PiBooksLight } from "react-icons/pi";
-import { IoSettingsOutline } from "react-icons/io5";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { BsRocketTakeoffFill } from "react-icons/bs";
-import { TbLayoutSidebarLeftCollapse } from "react-icons/tb";
-import TerminalLoader from "../../loading";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -23,11 +15,10 @@ const Dashboard = () => {
     <>
       <div className=" flex flex-col h-auto bg-[#F8F7F4] text-[#071e22] ">
         <Navbar isLandingPage={false} />
-        <div className="flex flex-grow justify-start items-stretch mx-6 my-4">
-          {/* px-16 py-4 */}
-
-          <Sidebar />
-
+        <div className="relative flex flex-row justify-start mx-4 my-4 ml-0">
+          <div>
+            <Sidebar />
+          </div>
           <div className="flex flex-1 overflow-y-auto bg-[#e7e4da] rounded-lg ">
             <div className="content-component flex flex-col flex-1 text-[#071e22] h-auto min-w-[530px] px-4">
               <div className="card-component my-4 p-4 pt-3 rounded-md bg-[#F8F7F4] shadow ">

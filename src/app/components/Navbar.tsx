@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 import Login from "./Login";
 import { GoChevronDown } from "react-icons/go";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
+
+const NavbarItems = [
+  { label: "Courses", icon: <GoChevronDown />, href: "/allcourses" },
+  { label: "Resources", icon: <GoChevronDown />, href: "/resources" },
+  { label: "Community", icon: <GoChevronDown />, href: "/community" },
+  { label: "Pricing", icon: <GoChevronDown />, href: "/pricing" },
+];
 
 interface NavbarProps {
   isLandingPage?: boolean;
@@ -64,18 +72,16 @@ const Navbar: React.FC<NavbarProps> = ({ isLandingPage = true }) => {
               SkillForge
             </a>
             <div className="flex gap-10 font-normal text-sm">
-              <p className="flex gap-1 items-center justify-center hover:text-[#fac105]">
-                Courses <GoChevronDown />
-              </p>
-              <p className="flex gap-2 items-center justify-center hover:text-[#fac105]">
-                Resources <GoChevronDown />
-              </p>
-              <p className="flex gap-2 items-center justify-center hover:text-[#fac105]">
-                Community <GoChevronDown />
-              </p>
-              <p className="flex gap-2 items-center justify-center hover:text-[#fac105]">
-                Pricing <GoChevronDown />
-              </p>
+              {NavbarItems.map((item) => (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  className="flex gap-1 items-center justify-center hover:text-[#fac105]"
+                >
+                  {item.label}
+                  {item.icon}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="flex gap-4">
@@ -107,7 +113,3 @@ const Navbar: React.FC<NavbarProps> = ({ isLandingPage = true }) => {
 };
 
 export default Navbar;
-
-// {
-//   !session ? <></> : <></>;
-// }

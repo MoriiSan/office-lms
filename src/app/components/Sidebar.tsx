@@ -4,10 +4,10 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
+import { BsRocketTakeoffFill } from "react-icons/bs";
 import MenuItems from "./MenuItems";
 import { useSession } from "next-auth/react";
 import { useSidebar } from "../context/SidebarContext";
-import { BsRocketTakeoffFill } from "react-icons/bs";
 
 {
   /* I need to put the Sidebar component inside a div in order for its sticky position to work */
@@ -47,7 +47,7 @@ const Sidebar = () => {
           )}
         </div>
       </Link>
-      <div className="flex flex-col mx-4 py-4 h-[76vh]">
+      <div className="flex flex-col justify-between mx-4 py-4 h-[76vh]">
         <div className="flex flex-col gap-1 text-md font-normal text-[#071e22]">
           {/* menu label */}
           <div
@@ -94,22 +94,35 @@ const Sidebar = () => {
             </Link>
           ))}
         </div>
+        {/* premium component */}
+        <div className="flex flex-col rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
+          {isCollapsed ? (
+            <>
+              <span>
+                <BsRocketTakeoffFill />
+              </span>
+            </>
+          ) : (
+            <>
+              <div className="flex gap-2 items-center text-md font-bold mb-2">
+                <div>Upgrade to PRO</div>
+                <span>
+                  <BsRocketTakeoffFill />
+                </span>
+              </div>
+
+              <div className="flex text-xs w-[254px]">
+                Level up with practical skills. Dive into real projects,
+                assessments, and certifications.
+              </div>
+
+              <button className="flex justify-center rounded-md mt-4 py-2 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]">
+                Upgrade
+              </button>
+            </>
+          )}
+        </div>
       </div>
-      {/* <div className="flex flex-col rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
-          <div className="flex gap-2 items-center text-md font-bold mb-2">
-            <div>Upgrade to PRO</div>
-            <div>
-              <BsRocketTakeoffFill />
-            </div>
-          </div>
-          <div className="text-xs">
-            Level up with practical skills. Dive into real projects,
-            assessments, and certifications.
-          </div>
-          <button className="flex w-full justify-center rounded-md mt-4 py-2 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]">
-            Upgrade
-          </button>
-        </div> */}
     </aside>
   );
 };
