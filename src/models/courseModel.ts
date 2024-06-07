@@ -37,7 +37,8 @@ const courseSchema = new mongoose.Schema(
       required: [true, "Description must not be empty."],
     },
     students: {
-      type: [String]
+      type: [String],
+      required: false
     },
     modules: {
       type: [moduleSchema],

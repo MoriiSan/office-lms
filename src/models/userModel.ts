@@ -19,6 +19,12 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    courses: {
+      type: [String]
+    },
+    subscription: {
+      type: String
+    }
   },
   {
     timestamps: true,
