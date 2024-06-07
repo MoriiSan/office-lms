@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export const POST = async (req: any) => {
   const { name, email, password } = await req.json();
 
-  await connectDB("clientDB");
+  await connectDB("skillforgeDB");
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {

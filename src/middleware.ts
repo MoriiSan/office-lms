@@ -4,5 +4,11 @@ export { default } from "next-auth/middleware";
 // middleware.ts should be inside the /src to work
 
 export const config = {
-  matcher: ["/dashboard"],
+  matcher: [
+    "/dashboard/:path*",
+    "/mycourses/:path*",
+    "/notifications/:path*",
+    "/profile/:path*",
+    "/settings/:path*",
+  ],
 };

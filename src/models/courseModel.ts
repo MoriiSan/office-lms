@@ -65,6 +65,7 @@ const courseSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+const collectionName = "courses"
 
 export default mongoose.models.Course ||
-  mongoose.model("Course", courseSchema, "courses");
+  mongoose.model("Course", courseSchema, collectionName);

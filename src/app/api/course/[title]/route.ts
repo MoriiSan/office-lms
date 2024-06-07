@@ -7,9 +7,9 @@ export const GET = async (
   request: NextRequest,
   { params }: { params: { title: string } }
 ) => {
-  await connectDB("adminDB");
 
   try {
+    await connectDB("skillforgeDB");
     const course = await Course.findOne({
       title: params.title,
       isPublished: true,
@@ -31,7 +31,7 @@ export const DELETE = async (
   request: NextRequest,
   { params }: { params: { id: string } }
 ) => {
-  await connectDB("adminDB");
+  await connectDB("skillforgeDB");
 
   try {
     const deletedCourse = await Course.findByIdAndDelete(params.id);

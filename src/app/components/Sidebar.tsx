@@ -95,7 +95,11 @@ const Sidebar = () => {
           ))}
         </div>
         {/* premium component */}
-        <div className="flex flex-col rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]">
+        <div
+          className={`flex flex-col ${
+            isCollapsed ? "" : "w-[228px] "
+          }  rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]`}
+        >
           {isCollapsed ? (
             <>
               <span>
@@ -111,7 +115,7 @@ const Sidebar = () => {
                 </span>
               </div>
 
-              <div className="flex text-xs w-[254px]">
+              <div className="flex text-xs ">
                 Level up with practical skills. Dive into real projects,
                 assessments, and certifications.
               </div>

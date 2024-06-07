@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { IoPersonCircleOutline } from "react-icons/io5";
+import { useSession } from "next-auth/react";
 
 interface Course {
   _id: string;
@@ -17,10 +18,24 @@ interface Course {
   description: string;
 }
 
+interface SessionUser {
+  _id: string;
+}
+
 const previewCourses = () => {
-  const { title } = useParams();
+  const { data: session } = useSession();
+  const params = useParams();
+  const title = Array.isArray(params.title) ? params.title[0] : params.title;
   const [course, setCourse] = useState<Course | null>(null);
+  const [courseId, setCourseId] = useState("");
+  const [student, setStudent] = useState("");
   const [loading, setLoading] = useState(true);
+
+  // let user;
+  // if (session) {
+  //   // alert(session!.user!.id);
+  //   user = session!.user!.id;
+  // }
 
   const stripHtmlTags = (str: string) => {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
@@ -32,6 +47,9 @@ const previewCourses = () => {
       if (response.ok) {
         const data = await response.json();
         setCourse(data);
+        setCourseId(data._id);
+        console.log("fetchCourseId:", data._id)
+        // setStudent(session!.user!.id);
       } else {
         console.error("Failed to fetch course.");
       }
@@ -42,9 +60,63 @@ const previewCourses = () => {
     }
   };
 
+  const updateEnrollees = async (enrollee: string, courseId: string) => {
+    console.log("CourseId[updateEnrollees]", courseId);
+    console.log("Student[updateEnrollees]", enrollee);
+    try {
+      const response = await fetch(`/api/course/${title}/enroll`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ enrollee }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        // const courseId = data.id
+        // console.log("CourseIdd",courseId)
+        await studentEnroll(enrollee, courseId);
+      } else {
+        console.log("Failed to update enrollees.");
+      }
+    } catch (error) {
+      console.log("Error updating enrollees: ", error);
+    }
+  };
+
+  const studentEnroll = async (studentId: string, courseId: string) => {
+    console.log("StudentId[studentEnroll]", studentId);
+    console.log("courseId[studentEnroll]", courseId);
+    try {
+      const response = await fetch(`/api/user`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ studentId, courseId }),
+      });
+      if (response.ok) {
+        // const data = await response.json();
+        console.log("Student enrolled successfully");
+      } else {
+        console.log("Student failed to enroll.");
+      }
+    } catch (error) {
+      console.log("Error enrolling to a course: ", error);
+    }
+  };
+
   useEffect(() => {
-    fetchCourse();
+    if (title) {
+      fetchCourse();
+    }
   }, [title]);
+
+  const handleEnrollClick = () => {
+    if (session) {
+      updateEnrollees(session!.user!.id, courseId);
+    }
+  };
 
   return (
     <>
@@ -77,7 +149,10 @@ const previewCourses = () => {
                   )}
 
                   <div className="flex flex-row items-center mt-4 gap-2">
-                    <button className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]">
+                    <button
+                      className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]"
+                      onClick={handleEnrollClick}
+                    >
                       Enroll
                     </button>
                     <div className="flex flex-row items-center gap-2 text-sm">

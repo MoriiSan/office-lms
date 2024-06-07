@@ -2,6 +2,7 @@
 
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdOutlinePerson } from "react-icons/md";

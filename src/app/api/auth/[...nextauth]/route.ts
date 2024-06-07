@@ -56,7 +56,7 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any) {
-        await connectDB("clientDB");
+        await connectDB("skillforgeDB");
         try {
           const user = await login(credentials);
           return user;
@@ -90,7 +90,7 @@ export const authOptions = {
       if (token) {
         session.user.name = token.name;
         session.user.email = token.email;
-        session.user.id = token.id;
+        session.user.id = token.sub;
       }
       // console.log("Session: ", session);
       return session;

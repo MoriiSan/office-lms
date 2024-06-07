@@ -24,5 +24,6 @@ const SSOSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+const collectionName = "studentSSO"
 
-export default mongoose.models.SSO_User || mongoose.model("SSO_User", SSOSchema, "SSO");
+export default mongoose.models.SSO_User || mongoose.model("SSO_User", SSOSchema, collectionName);

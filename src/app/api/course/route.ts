@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 // Get all published courses
 export const GET = async (request: NextRequest) => {
-  await connectDB("adminDB");
+  await connectDB("skillforgeDB");
 
   try {
     const courses = await Course.find({ isPublished: true });

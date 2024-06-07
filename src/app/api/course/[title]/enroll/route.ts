@@ -3,18 +3,19 @@ import Course from "@/models/courseModel";
 import User from "@/models/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
-// Update a course
+// Update a course enrollees
 export const PUT = async (
   request: NextRequest,
   { params }: { params: { title: string } }
 ) => {
-  const { students } = await request.json();
+  const { enrollee } = await request.json();
 
   try {
-    await connectDB("adminDB");
+    await connectDB("skillforgeDB");
+    console.log("Course StudentId: ", enrollee);
     const updatedCourse = await Course.findOneAndUpdate(
       { title: params.title },
-      { $addToSet: { students } },
+      { $addToSet: { students: enrollee } },
       { new: true }
     );
     if (!updatedCourse) {
@@ -24,22 +25,9 @@ export const PUT = async (
       );
     }
 
-   await connectDB("clientDB");
-
-    console.log("Updating user with ID:", students);
-    const user = await User.findById(students);
-    console.log(user)
-  
-    if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
-    }
-
-    user.courses.addToSet(updatedCourse._id); 
-    await user.save();
-
     return NextResponse.json(updatedCourse, { status: 200 });
   } catch (error) {
-    console.log("Error: ", error)
+    console.log("Error: ", error);
     return NextResponse.json({ message: error }, { status: 400 });
   }
 };

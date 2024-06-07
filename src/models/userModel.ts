@@ -31,5 +31,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+const collectionName = "studentUsers"
+
 export default mongoose.models.User ||
-  mongoose.model("User", userSchema, "users");
+  mongoose.model("User", userSchema, collectionName);

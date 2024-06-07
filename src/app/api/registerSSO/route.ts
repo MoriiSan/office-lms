@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (request: NextRequest) => {
   const { name, email, image } = await request.json();
 
-  await connectDB("clientDB");
+  await connectDB("skillforgeDB");
 
   await SSO_User.create({ name, email, image });
   return NextResponse.json(
