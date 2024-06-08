@@ -31,11 +31,6 @@ const previewCourses = () => {
   const [student, setStudent] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // let user;
-  // if (session) {
-  //   // alert(session!.user!.id);
-  //   user = session!.user!.id;
-  // }
 
   const stripHtmlTags = (str: string) => {
     return str.replace(/<\/?[^>]+(>|$)/g, "");

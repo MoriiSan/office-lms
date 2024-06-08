@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import User from "@/models/userModel";
 
 //student enrol to a course
-export const POST = async (request: NextRequest) => {
+export const PUT = async (request: NextRequest) => {
   const { studentId, courseId } = await request.json();
 
   try {

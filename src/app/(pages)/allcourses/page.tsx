@@ -9,7 +9,7 @@ import { MdOutlinePerson } from "react-icons/md";
 
 interface Course {
   _id: string;
-  instructorId: string;
+  instructorName: string;
   courseCode: string;
   title: string;
   description: string;
@@ -38,6 +38,7 @@ const AllCourses = () => {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     getCourses();
@@ -124,7 +125,7 @@ const AllCourses = () => {
                           </div>
                           <div className="flex border border-[#071e22] justify-between items-center rounded-b py-1 px-3">
                             <div className="text-zinc-800 text-sm font-medium">
-                              {course.instructorId}
+                              {course.instructorName}
                             </div>
                             <MdOutlinePerson size={16} />
                           </div>

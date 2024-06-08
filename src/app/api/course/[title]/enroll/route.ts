@@ -12,7 +12,7 @@ export const PUT = async (
 
   try {
     await connectDB("skillforgeDB");
-    console.log("Course StudentId: ", enrollee);
+    console.log("Course enrollee: ", enrollee);
     const updatedCourse = await Course.findOneAndUpdate(
       { title: params.title },
       { $addToSet: { students: enrollee } },
