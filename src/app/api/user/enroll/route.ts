@@ -27,3 +27,26 @@ export const PUT = async (request: NextRequest) => {
     return NextResponse.json({ message: error }, { status: 400 });
   }
 };
+
+// Remove a course from a student
+export const DELETE = async (request: NextRequest) => {
+  const { studentId, courseId } = await request.json();
+
+  try {
+    await connectDB("skillforgeDB");
+    console.log("Removing course from student:", courseId);
+
+    const user = await User.findById(studentId);
+    if (!user) {
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    }
+
+    user.courses.pull(courseId);
+    await user.save();
+
+    return NextResponse.json("Course removed from student.", { status: 200 });
+  } catch (error) {
+    console.log("Error: ", error);
+    return NextResponse.json({ message: error }, { status: 400 });
+  }
+};

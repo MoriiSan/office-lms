@@ -31,3 +31,32 @@ export const PUT = async (
     return NextResponse.json({ message: error }, { status: 400 });
   }
 };
+
+// Unenroll a student from a course
+export const DELETE = async (
+  request: NextRequest,
+  { params }: { params: { title: string } }
+) => {
+  const { enrollee } = await request.json();
+
+  try {
+    await connectDB("skillforgeDB");
+    console.log("Unenrolling student: ", enrollee);
+    const updatedCourse = await Course.findOneAndUpdate(
+      { title: params.title },
+      { $pull: { students: enrollee } },
+      { new: true }
+    );
+    if (!updatedCourse) {
+      return NextResponse.json(
+        { message: "Course not found" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(updatedCourse, { status: 200 });
+  } catch (error) {
+    console.log("Error: ", error);
+    return NextResponse.json({ message: error }, { status: 400 });
+  }
+};
