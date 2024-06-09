@@ -44,16 +44,6 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-
-    // if (!isEmailValid(email)) {
-    //   setError("Email is invalid.");
-    //   return;
-    // }
-
-    // if (!password) {
-    //   setError("Password is invalid.");
-    //   return;
-    // }
     
     try {
       setIsPending(true);

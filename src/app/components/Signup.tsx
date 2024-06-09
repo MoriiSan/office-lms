@@ -62,26 +62,32 @@ const Signup = () => {
       });
       if (res.ok) {
         setIsPending(false);
-        const form = e.target;
-        form.reset();
+        setEmail("");
+        setName("");
+        setPassword("");
         setLoginOpen(true);
         toast.success("User successfully registered.", {
           position: "top-center",
           classNames: {
             title: "text-green-600",
             description: "text-green-600",
-            success: 'text-green-600',
-          }
-        })
+            success: "text-green-600",
+          },
+        });
         console.log("User successfully registered.");
       } else {
         const errorData = await res.json();
         setError(errorData.message);
         setIsPending(false);
+        setTimeout(() => {
+          setError("");
+        }, 3000);
       }
     } catch (error) {
       setError("Something whent wrong. Try again");
-      setIsPending(false);
+      setTimeout(() => {
+        setError("");
+      }, 3000);
       setIsPending(false);
       console.log(error);
     }

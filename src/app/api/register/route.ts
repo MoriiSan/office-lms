@@ -3,8 +3,8 @@ import User from "@/models/userModel";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
 
-export const POST = async (req: any) => {
-  const { name, email, password } = await req.json();
+export const POST = async (request: NextResponse) => {
+  const { name, email, password } = await request.json();
 
   await connectDB("skillforgeDB");
 
