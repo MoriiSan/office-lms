@@ -27,7 +27,7 @@ const Settings = () => {
 
   const deleteAccount = async (email: string) => {
     try {
-      const response = await fetch(`/api/deleteAccount`, {
+      const response = await fetch(`/api/user/deleteAccount`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

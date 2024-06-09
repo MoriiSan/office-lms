@@ -1,37 +1,44 @@
 import mongoose from "mongoose";
 
 // IMPORTANT!!
-// Always restart the project from the terminal,
-// so that the data saves in the designated COLLECTTION
+// Always restart the project from the terminal;
+// when creating or editing a schema/model
+// so that the data saves in the designated COLLECTION
 
 const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: [true, "Name is required."],
     },
     email: {
       type: String,
-      required: true,
-      unique: true,
+      required: [true, "Email is required."],
+      unique: [true, "Email already exists."],
     },
     password: {
       type: String,
-      required: true,
+    },
+    image: {
+      type: String,
+    },
+    isSSO: {
+      type: Boolean,
+      default: false,
     },
     courses: {
-      type: [String]
+      type: [String],
     },
     subscription: {
-      type: String
-    }
+      type: String,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-const collectionName = "studentUsers"
+const collectionName = "studentUsers";
 
 export default mongoose.models.User ||
   mongoose.model("User", userSchema, collectionName);

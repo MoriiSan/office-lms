@@ -1,0 +1,85 @@
+import { connectDB } from "@/utils/connect";
+import User from "@/models/userModel";
+import bcrypt from "bcryptjs";
+import { NextRequest, NextResponse } from "next/server";
+
+export const POST = async (request: NextRequest) => {
+  const { name, email, password, image } = await request.json();
+
+  await connectDB("skillforgeDB");
+
+  // Handle regular user registration
+  if (password) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return NextResponse.json(
+        { message: "Email is already in use." },
+        { status: 400 }
+      );
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      isSSO: false,
+    });
+
+    try {
+      await newUser.save();
+      return NextResponse.json("User successfully registered.", {
+        status: 201,
+      });
+    } catch (error) {
+      return NextResponse.json(error, {
+        status: 500,
+      });
+    }
+  } else {
+    // Handle SSO user registration
+    try {
+      await User.create({ name, email, image, isSSO: true });
+      return NextResponse.json("SSO User successfully registered", {
+        status: 201,
+      });
+    } catch (error) {
+      return NextResponse.json({ message: error }, { status: 500 });
+    }
+  }
+};
+
+// import { connectDB } from "@/utils/connect";
+// import User from "@/models/userModel";
+// import bcrypt from "bcryptjs";
+// import { NextResponse } from "next/server";
+
+// export const POST = async (request: NextResponse) => {
+//   const { name, email, password } = await request.json();
+
+//   await connectDB("skillforgeDB");
+
+//   const existingUser = await User.findOne({ email });
+//   if (existingUser) {
+//     return NextResponse.json(
+//       { message: "Email is already in use." },
+//       { status: 400 }
+//     );
+//   }
+
+//   const hashedPassword = await bcrypt.hash(password, 10);
+//   const newUser = new User({
+//     name,
+//     email,
+//     password: hashedPassword,
+//   });
+
+//   try {
+//     await newUser.save();
+//     return NextResponse.json("User successfully registered.", { status: 201 });
+//   } catch (err: any) {
+//     return NextResponse.json(err, {
+//       status: 500,
+//     });
+//   }
+// };

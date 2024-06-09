@@ -30,18 +30,18 @@ async function login(credentials: { email: string; password: string }) {
   } catch (error) {}
 }
 
-async function SSOlogin(email: SSO_User) {
-  try {
-    const user = await SSO_User.findOne({ email: email });
-    if (!user) {
-      console.log("SSO Log-In: User does not exist.");
-      return null;
-    }
-    return user;
-  } catch (error) {
-    console.log("SSO Login failed: ", error);
-  }
-}
+// async function SSOlogin(email: SSO_User) {
+//   try {
+//     const user = await SSO_User.findOne({ email: email });
+//     if (!user) {
+//       console.log("SSO Log-In: User does not exist.");
+//       return null;
+//     }
+//     return user;
+//   } catch (error) {
+//     console.log("SSO Login failed: ", error);
+//   }
+// }
 
 export const authOptions = {
   pages: {
@@ -110,7 +110,7 @@ export const authOptions = {
       if (account.provider === "google") {
         const { name, email, image } = user;
         try {
-          const res = await fetch("http://localhost:3000/api/registerSSO", {
+          const res = await fetch("http://localhost:3000/api/user/register", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

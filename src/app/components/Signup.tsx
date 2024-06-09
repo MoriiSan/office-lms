@@ -40,25 +40,16 @@ const Signup = () => {
     const name = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
-
-    // if (!isEmailValid(email)) {
-    //   setError("Email is invalid.");
-    //   return;
-    // }
-
-    // if (!password) {
-    //   setError("Password is invalid.");
-    //   return;
-    // }
+    const image = ""
 
     try {
       setIsPending(true);
-      const res = await fetch("/api/register", {
+      const res = await fetch("/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, email, password }),
+        body: JSON.stringify({ name, email, password, image }),
       });
       if (res.ok) {
         setIsPending(false);
