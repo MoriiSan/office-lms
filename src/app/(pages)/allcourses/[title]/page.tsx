@@ -170,9 +170,9 @@ const previewCourses = () => {
       <div className="  flex flex-col h-auto bg-[#F8F7F4] text-[#071e22] ">
         <Navbar isLandingPage={false} />
         <div className="relative flex flex-row justify-start">
-          <div className="mt-4">
+          {/* <div className="mt-4">
             <Sidebar />
-          </div>
+          </div> */}
           <div className="w-full">
             <div className="flex flex-grow justify-start items-stretch ">
               <div className="flex flex-col flex-1 overflow-y-auto ">

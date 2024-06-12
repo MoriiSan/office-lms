@@ -1,5 +1,5 @@
 import { connectDB } from "@/utils/connect";
-import Course from "@/models/courseModel";
+import { Course } from "@/models/courseModel";
 import { NextRequest, NextResponse } from "next/server";
 
 // Get a single course
@@ -7,7 +7,6 @@ export const GET = async (
   request: NextRequest,
   { params }: { params: { title: string } }
 ) => {
-
   try {
     await connectDB("skillforgeDB");
     const course = await Course.findOne({

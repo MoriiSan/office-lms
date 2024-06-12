@@ -1,71 +1,87 @@
-import mongoose from "mongoose";
+import { Schema, Model, model, models, ObjectId } from "mongoose";
+import { IModule } from "./ModuleModel";
+import { IInstructor } from "./instructorModel";
 
 // IMPORTANT!!
 // Always restart the project from the terminal;
 // when creating or editing a schema/model
 // so that the data saves in the designated COLLECTTION
 
-const moduleSchema = new mongoose.Schema({
-  title: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
-  content: {
-    type: String,
-  },
-});
+interface ICourse {
+  _id: ObjectId;
+  instructor: IInstructor;
+  courseCode: string;
+  title: string;
+  description: string;
+  students: string[];
+  modules: IModule[];
+  imageThumbnail: string;
+  isPublished: boolean;
+  category: string[];
+  subscriptionType: "Free" | "Basic" | "Premium";
+  quizzes: string;
+}
 
-const courseSchema = new mongoose.Schema(
+type CourseModel = Model<ICourse>;
+
+const courseSchema: Schema = new Schema<ICourse, CourseModel>(
   {
-    instructorId: {
-      type: String,
-      required: [true, "Author is required."],
-    },
-    title: {
-      type: String,
-      required: [true, "Title must not be empty."],
+    instructor: {
+      type: Schema.Types.ObjectId,
+      ref: "Course",
+      required: true,
     },
     courseCode: {
       type: String,
-      required: [true, "Course Code must not be empty."],
-      unique: [true, "Course Code must be unique."],
+    },
+    title: {
+      type: String,
     },
     description: {
       type: String,
-      required: [true, "Description must not be empty."],
     },
-    students: {
-      type: [String],
-      required: false
-    },
-    modules: {
-      type: [moduleSchema],
-    },
+    students: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Student",
+      },
+    ],
+    modules: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Module",
+      },
+    ],
     imageThumbnail: {
-      type: String,
-    },
-    videoUrl: {
       type: String,
     },
     isPublished: {
       type: Boolean,
-      required: [true, "Must be unpublished at default."],
+      default: false,
     },
     category: {
       type: [String],
     },
-    price: {
-      type: Number,
-      required: [true, "Zero value at default."],
+    subscriptionType: {
+      type: String,
+      enum: ["Free", "Basic", "Premmium"],
+      default: "Free",
+      required: true,
+    },
+    quizzes: {
+      type: String,
     },
   },
   {
     timestamps: true,
   }
 );
-const collectionName = "courses"
 
-export default mongoose.models.Course ||
-  mongoose.model("Course", courseSchema, collectionName);
+const Course: CourseModel =
+  models?.Course || model<ICourse, CourseModel>("Course", courseSchema);
+export type { ICourse };
+export { Course, courseSchema };
+
+// const collectionName = "courses";
+// export default mongoose.models.Course ||
+//   mongoose.model("Course", courseSchema, collectionName);

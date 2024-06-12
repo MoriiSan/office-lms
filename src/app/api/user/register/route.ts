@@ -1,5 +1,5 @@
 import { connectDB } from "@/utils/connect";
-import User from "@/models/userModel";
+import { Student } from "@/models/studentModel";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,7 +10,7 @@ export const POST = async (request: NextRequest) => {
 
   // Handle regular user registration
   if (password) {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await Student.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
         { message: "Email is already in use." },
@@ -19,7 +19,7 @@ export const POST = async (request: NextRequest) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({
+    const newUser = new Student({
       name,
       email,
       password: hashedPassword,
@@ -39,7 +39,7 @@ export const POST = async (request: NextRequest) => {
   } else {
     // Handle SSO user registration
     try {
-      await User.create({ name, email, image, isSSO: true });
+      await Student.create({ name, email, image, isSSO: true });
       return NextResponse.json("SSO User successfully registered", {
         status: 201,
       });
