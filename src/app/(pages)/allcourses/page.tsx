@@ -120,7 +120,8 @@ const AllCourses = () => {
                         key={course._id}
                         className="single-card flex flex-col col-span-12 lg:col-span-6 xl:col-span-4"
                       >
-                        <Link href={`/allcourses/${course.title}`}>
+                        <Link href={`/allcourses/${course.title}`}
+                        data-testid={`available-course-{id}`}>
                           <div className="border border-b-0 border-[#071e22] bg-[#ffabab] rounded-t py-1 px-3">
                             Free Course
                           </div>

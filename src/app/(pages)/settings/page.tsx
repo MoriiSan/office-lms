@@ -97,6 +97,7 @@ const Settings = () => {
                 <button
                   className="mt-8 h-[40px] w-[200px] rounded border border-red-600 hover:bg-red-600 hover:text-white last:font-semibold text-sm text-red-600"
                   onClick={handleDeleteModal}
+                  data-testid="delete-account"
                 >
                   Delete my account
                 </button>
@@ -122,11 +123,12 @@ const Settings = () => {
                 <button
                   className={`w-full border  border-gray-200 bg-none text-sm text-gray-600 py-2 rounded-md hover:bg-gray-200 `}
                   onClick={handleDeleteModal}
+                  data-testid="cancel"
                 >
                   Cancel
                 </button>
                 <button
-                  data-testid=""
+                  data-testid="proceed"
                   type="submit"
                   className={`w-full bg-red-600 text-sm text-white py-2 rounded-md hover:bg-red-700 `}
                   onClick={() => handleDelete()}

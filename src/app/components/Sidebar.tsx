@@ -24,13 +24,17 @@ const Sidebar = () => {
         isCollapsed ? "min-w-[80px] " : "min-w-[260px]"
       } bg-[#F8F7F4] text-[#071e22] transition-all duration-100`}
     >
-      <Link href="/profile" className="mx-4 pb-4 border-b border-[#e7e4da]">
+      <Link
+        href="/profile"
+        className="mx-4 pb-4 border-b border-[#e7e4da]"
+        data-testid="student-profile"
+      >
         <div
           className={`profile-component border-box min-h-[40px] flex items-center p-2 rounded text-[#071e22] bg-[#]`}
         >
           <div className="icon-component flex justify-center items-center p-1 px-1.5 bg-[#071e22] text-white font-bold rounded">
             JD
-          </div>
+          </div> 
           {!isCollapsed && (
             <>
               <div

@@ -298,6 +298,7 @@ const previewCourses = () => {
                             <button
                               className="p-1 px-3 rounded border border-[#F8F7F4] hover:border-red-600 text-gray-500 hover:text-red-600 text-sm font-medium"
                               onClick={handleUnenroll}
+                              data-testid="unregister-course"
                             >
                               Unenroll
                             </button>
@@ -309,6 +310,7 @@ const previewCourses = () => {
                             <button
                               className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]"
                               onClick={handleEnroll}
+                              data-testid="register-course-{id}"
                             >
                               Enroll
                             </button>
@@ -344,7 +346,10 @@ const previewCourses = () => {
                       </div>
                       {isEnrolled && (
                         <>
-                          <Link href={`/allcourses/${title}/modules`}>
+                          <Link
+                            href={`/allcourses/${title}/modules`}
+                            data-testid="active-module-{id}"
+                          >
                             <IoIosArrowDown size={28} />
                           </Link>
                         </>
@@ -364,7 +369,8 @@ const previewCourses = () => {
                       </div>
                       {isEnrolled && (
                         <>
-                          <Link href={`/allcourses/${title}/quizzes`}>
+                          <Link href={`/allcourses/${title}/quizzes`}
+                          data-testid="active-lesson-{id}-quiz">
                             <IoIosArrowDown size={28} />
                           </Link>
                         </>

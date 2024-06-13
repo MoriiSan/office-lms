@@ -8,12 +8,12 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 const NavbarItems = [
-  { label: "Courses", icon: <GoChevronDown />, href: "/allcourses" },
+  { label: "Courses", icon: <GoChevronDown />, href: "/allcourses", testid: "available-courses" },
   { label: "Resources", icon: <GoChevronDown />, href: "/resources" },
   { label: "Community", icon: <GoChevronDown />, href: "/community" },
   { label: "Pricing", icon: <GoChevronDown />, href: "/pricing" },
 ];
-
+``
 interface NavbarProps {
   isLandingPage?: boolean;
 }
@@ -71,18 +71,19 @@ const Navbar: React.FC<NavbarProps> = ({ isLandingPage = true }) => {
             >
               SkillForge
             </a>
-            <div className="flex gap-10 font-normal text-sm">
+            <button className="flex gap-10 font-normal text-sm">
               {NavbarItems.map((item) => (
                 <Link
                   href={item.href}
                   key={item.href}
                   className="flex gap-1 items-center justify-center hover:text-[#fac105]"
+                  data-testid={item.testid}
                 >
                   {item.label}
                   {item.icon}
                 </Link>
               ))}
-            </div>
+            </button>
           </div>
           <div className="flex gap-4">
             {!isLandingPage ? (
