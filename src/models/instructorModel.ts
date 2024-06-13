@@ -13,7 +13,6 @@ interface IInstructor {
   password: string;
   imageUrl: string;
   isSSO: boolean;
-  courses: ICourse[];
 }
 
 type InstructorModel = Model<IInstructor>;
@@ -39,9 +38,6 @@ const instructorSchema: Schema = new Schema<IInstructor, InstructorModel>(
       type: Boolean,
       default: false,
     },
-    courses: {
-      type: [{ type: Schema.Types.ObjectId, ref: "Course" }],
-    },
   },
   {
     timestamps: true,
@@ -50,7 +46,7 @@ const instructorSchema: Schema = new Schema<IInstructor, InstructorModel>(
 
 const Instructor: InstructorModel =
   models?.Instructor ||
-  model<IInstructor, InstructorModel>("Instructors", instructorSchema);
+  model<IInstructor, InstructorModel>("Instructor", instructorSchema);
 
 export type { IInstructor };
 export { Instructor, instructorSchema };

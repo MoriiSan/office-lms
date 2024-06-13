@@ -1,5 +1,5 @@
 import { connectDB } from "@/utils/connect";
-import User from "@/models/userModel";
+import { Student } from "@/models/studentModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export const DELETE = async (request: NextRequest) => {
@@ -7,7 +7,7 @@ export const DELETE = async (request: NextRequest) => {
 
   await connectDB("skillforgeDB");
 
-  const user = await User.findOne({ email });
+  const user = await Student.findOne({ email });
   if (!user) {
     return NextResponse.json(
       { message: "user does not exist." },
@@ -16,7 +16,7 @@ export const DELETE = async (request: NextRequest) => {
   }
 
   try {
-    await User.deleteOne({ email });
+    await Student.deleteOne({ email });
     return NextResponse.json("User account successfully deleted.", {
       status: 200,
     });

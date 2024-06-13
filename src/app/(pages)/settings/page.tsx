@@ -14,6 +14,7 @@ import { FcGoogle } from "react-icons/fc";
 import { VscGithubInverted } from "react-icons/vsc";
 import { GoX } from "react-icons/go";
 import { signOut, useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 const Settings = () => {
   const { data: session } = useSession();
@@ -35,13 +36,37 @@ const Settings = () => {
         body: JSON.stringify({ email }),
       });
       if (response.ok) {
-        console.log("Acount successfully deleted.");
+        console.log("Account successfully deleted.");
+        toast.success("Account successfully deleted", {
+          position: "top-right",
+          classNames: {
+            title: "text-green-600",
+            description: "text-green-600",
+            success: "text-green-600",
+          },
+        });
         await signOut({ callbackUrl: "/" });
       } else {
         console.log("Failed to delete account.");
+        toast.error("Failed to delete account", {
+          position: "top-right",
+          classNames: {
+            title: "text-red-600",
+            description: "text-red-600",
+            error: "text-red-600",
+          },
+        });
       }
     } catch (error) {
       console.log(error);
+      toast.error("Error occurred in deleting account.", {
+        position: "top-right",
+        classNames: {
+          title: "text-red-600",
+          description: "text-red-600",
+          error: "text-red-600",
+        },
+      });
     }
   };
 

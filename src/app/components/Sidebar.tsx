@@ -97,7 +97,7 @@ const Sidebar = () => {
         {/* premium component */}
         <div
           className={`flex flex-col ${
-            isCollapsed ? "" : "w-[228px] "
+            isCollapsed ? "" : "w-[260px] "
           }  rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]`}
         >
           {isCollapsed ? (

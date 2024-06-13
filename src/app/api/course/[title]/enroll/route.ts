@@ -1,6 +1,6 @@
 import { connectDB } from "@/utils/connect";
-import Course from "@/models/courseModel";
-import User from "@/models/userModel";
+import { Course } from "@/models/courseModel";
+import { Student } from "@/models/studentModel";
 import { NextRequest, NextResponse } from "next/server";
 
 // Update a course enrollees

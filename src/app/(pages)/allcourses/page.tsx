@@ -2,14 +2,16 @@
 
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
+import { IInstructor } from "@/models/instructorModel";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdOutlinePerson } from "react-icons/md";
+import { IoArrowBack } from "react-icons/io5";
 
 interface Course {
   _id: string;
-  instructorName: string;
+  instructor: IInstructor;
   courseCode: string;
   title: string;
   description: string;
@@ -39,7 +41,6 @@ const AllCourses = () => {
     }
   };
 
-
   useEffect(() => {
     getCourses();
   }, []);
@@ -65,6 +66,12 @@ const AllCourses = () => {
             <div className="flex flex-row justify-between items-center p-4 pt-3 rounded-md text-gray-100 bg-[#071e22] shadow">
               <div className="text-2xl font-bold">Explore the catalog</div>
             </div>
+            <Link href="/dashboard">
+              <div className="flex flex-row items-center text-gray-500 hover:text-blue-800">
+                <IoArrowBack />
+                <div className="ml-1 text-sm font-medium">Back to Home</div>
+              </div>
+            </Link>
             <div className="flex flex-row justify-between items-center p-4 pt-3 rounded-md border border-[#071e22] text-[#071e22] bg-[#F8F7F4]">
               <div>
                 <div className="text-lg font-bold">UPGRADE TO PRO</div>
@@ -125,7 +132,7 @@ const AllCourses = () => {
                           </div>
                           <div className="flex border border-[#071e22] justify-between items-center rounded-b py-1 px-3">
                             <div className="text-zinc-800 text-sm font-medium">
-                              {course.instructorName}
+                              {course.instructor.name}
                             </div>
                             <MdOutlinePerson size={16} />
                           </div>

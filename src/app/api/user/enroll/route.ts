@@ -1,6 +1,6 @@
 import { connectDB } from "@/utils/connect";
 import { NextRequest, NextResponse } from "next/server";
-import User from "@/models/userModel";
+import { Student } from "@/models/studentModel";
 
 //student enrol to a course
 export const PUT = async (request: NextRequest) => {
@@ -11,14 +11,14 @@ export const PUT = async (request: NextRequest) => {
     console.log("User Enrollee:", studentId);
     console.log("user CourseId", courseId);
 
-    const user = await User.findById(studentId);
+    const user = await Student.findById(studentId);
     // console.log(user);
 
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    user.courses.addToSet(courseId);
+    user.courses.push(courseId);
     await user.save();
 
     return NextResponse.json("User enrolled to a course.", { status: 200 });
@@ -36,12 +36,16 @@ export const DELETE = async (request: NextRequest) => {
     await connectDB("skillforgeDB");
     console.log("Removing course from student:", courseId);
 
-    const user = await User.findById(studentId);
+    const user = await Student.findById(studentId);
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
-    user.courses.pull(courseId);
+    // Fix: Access the 'courses' property properly
+    const courseIndex = user.courses.indexOf(courseId);
+    if (courseIndex !== -1) {
+      user.courses.splice(courseIndex, 1);
+    }
     await user.save();
 
     return NextResponse.json("Course removed from student.", { status: 200 });

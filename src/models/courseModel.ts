@@ -28,7 +28,7 @@ const courseSchema: Schema = new Schema<ICourse, CourseModel>(
   {
     instructor: {
       type: Schema.Types.ObjectId,
-      ref: "Course",
+      ref: "Instructor",
       required: true,
     },
     courseCode: {

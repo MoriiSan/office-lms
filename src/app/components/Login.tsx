@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
-import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
 import EmailIcon from "../../../public/assets/icons/email";
 import PasswordIcon from "../../../public/assets/icons/password";
 import EyeIcon from "../../../public/assets/icons/eye";
@@ -11,6 +11,7 @@ import ValidIcon from "../../../public/assets/icons/valid";
 import { FcGoogle } from "react-icons/fc";
 import { VscGithubInverted } from "react-icons/vsc";
 import { GoX } from "react-icons/go";
+import { toast } from "sonner";
 
 interface ModalProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ interface ModalProps {
 
 const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -27,6 +29,27 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [emailInputActive, setEmailInputActive] = useState(false);
   const emailInputRef = useRef<HTMLInputElement>(null);
 
+  // const { status } = useSession();
+  // if (status === "authenticated") {
+  //   router.push("/dashboard");
+  // }
+
+  const search = searchParams.get("failed");
+  useEffect(() => {
+    if (search) {
+      toast.error("User does not exist in SkillForge.", {
+        position: "top-center",
+        classNames: {
+          title: "text-red-600",
+          description: "text-red-600",
+          error: "text-red-600",
+        },
+      });
+      setIsPending(false);
+      return;
+    }
+  }, []);
+
   useEffect(() => {
     if (isOpen) {
       if (emailInputRef.current) {
@@ -34,6 +57,15 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       }
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError("");
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
 
   const isEmailValid = (email: string) => {
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
@@ -44,7 +76,26 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-    
+
+    if (!email) {
+      if (!password) {
+        setError("Email and password is required");
+        return;
+      } else {
+        setError("Email is required");
+        return;
+      }
+    } else {
+      if (!password) {
+        setError("Password is required");
+        return;
+      }
+    }
+    if (!isEmailValid(email)) {
+      setError("Email has invalid format");
+      return;
+    }
+
     try {
       setIsPending(true);
       const res = await signIn("credentials", {
@@ -75,8 +126,10 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
       {isOpen && (
         <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-70 z-50">
           <div className="relative box-border border border-[#071e22] hover:border-[#3510bc] bg-[#F8F7F4] p-8 rounded-md h-auto w-[450px]">
-            <div className="absolute cursor-pointer right-7 top-7 text-black hover:text-red-500"
-            onClick={onClose}>
+            <div
+              className="absolute cursor-pointer right-7 top-7 text-black hover:text-red-500"
+              onClick={onClose}
+            >
               <GoX size={25} />
             </div>
             <h2 className="flex justify-center text-2xl font-extrabold text-[#071e22]">
@@ -86,10 +139,13 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
               Log in to SkillForge
             </p>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} noValidate>
               <div className="relative mb-4">
                 {error && (
-                  <span className="error flex text-white text-sm w-full px-3 py-2 rounded-md bg-[#ee2e31]">
+                  <span
+                    data-testid="error_EmptyField"
+                    className="error flex text-white text-sm w-full px-3 py-2 rounded-md bg-[#ee2e31]"
+                  >
                     {error}
                   </span>
                 )}
@@ -113,7 +169,6 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     setEmail(e.target.value);
                     setEmailInputActive(true); // Mark email input as touched on change
                   }}
-                  required
                 />
                 {isEmailValid(email) && emailInputActive ? ( // Display icon only if email is valid and input is touched
                   <span className="absolute h-4 w-4 top-1/2 translate-y-[-45%] right-3">
@@ -136,7 +191,6 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                 />
                 <span
                   className="absolute h-5 w-5 top-1/2 translate-y-[-45%] right-3"
@@ -149,15 +203,23 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   )}
                 </span>
               </div>
-              <button
-                data-testid="login-button"
-                type="submit"
-                disabled={isPending ? true : false}
-                className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md
-                 "cursor-not-allowed" : "hover:bg-[#3510bc]" `}
-              >
-                {isPending ? "Logging In" : "Log In"}
-              </button>
+              {isPending ? (
+                <>
+                  <div className="flex justify-center w-full bg-[#3510bc] text-sm text-white py-2 rounded-md">
+                    Logging In
+                  </div>
+                </>
+              ) : (
+                <>
+                  <button
+                    data-testid="login-button"
+                    type="submit"
+                    className={`w-full bg-[#4014e4] text-sm text-white py-2 rounded-md hover:bg-[#3510bc] `}
+                  >
+                    Log In
+                  </button>
+                </>
+              )}
 
               <div className="flex justify-center items-center gap-2 text-[#679289]">
                 <div>-</div>
@@ -181,8 +243,8 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 Continue with Google
               </button>
               <button
-              className="flex items-center justify-center w-full border border-[#772e9b] hover:bg-[#ffffff] text-sm text-[#772e9b] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
-              onClick={async () =>
+                className="flex items-center justify-center w-full border border-[#772e9b] hover:bg-[#ffffff] text-sm text-[#772e9b] py-2 rounded-md hover:border-[#3510bc] hover:text-[#3510bc]"
+                onClick={async () =>
                   await signIn("github", { callbackUrl: "/dashboard" })
                 }
               >
