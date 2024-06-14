@@ -5,7 +5,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { Student } from "@/models/studentModel";
 import { connectDB } from "@/utils/connect";
-import { NextResponse } from "next/server";
 import { Session, User } from "next-auth";
 
 interface Credentials {
@@ -107,6 +106,17 @@ export const authOptions = {
       }
 
       return user;
+    },
+  },
+  cookies: {
+    sessionToken: {
+      name: `student-next-auth.session-token`,
+      options: {
+        path: "/",
+        httpOnly: true,
+        sameSite: "lax" as const,
+        secure: process.env.NODE_ENV === "production",
+      },
     },
   },
 };
