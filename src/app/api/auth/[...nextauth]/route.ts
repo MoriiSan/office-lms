@@ -108,17 +108,17 @@ export const authOptions = {
       return user;
     },
   },
-  cookies: {
-    sessionToken: {
-      name: `student-next-auth.session-token`,
-      options: {
-        path: "/",
-        httpOnly: true,
-        sameSite: "lax" as const,
-        secure: process.env.NODE_ENV === "production",
-      },
-    },
-  },
+  // cookies: {
+  //   sessionToken: {
+  //     name: `student-next-auth.session-token`,
+  //     options: {
+  //       path: "/",
+  //       httpOnly: true,
+  //       sameSite: "lax" as const,
+  //       secure: process.env.NODE_ENV === "production",
+  //     },
+  //   },
+  // },
 };
 
 const handler = NextAuth(authOptions);
