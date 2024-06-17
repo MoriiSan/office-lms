@@ -12,8 +12,9 @@ interface Credentials {
   password: string;
 }
 
-async function login(credentials: Credentials): Promise<any | null> {
+async function studentLogin(credentials: Credentials): Promise<any | null> {
   try {
+    await connectDB("skillforgeDB");
     const user = await Student.findOne({ email: credentials.email });
     if (user) {
       const isPasswordCorrect = await bcrypt.compare(
@@ -44,13 +45,8 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        await connectDB("skillforgeDB");
-        const user = await login(credentials as Credentials);
-        if (user) {
-          return user;
-        } else {
-          return null;
-        }
+        const user = await studentLogin(credentials as Credentials);
+        return user;
       },
     }),
 
@@ -64,7 +60,7 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: { token: any; user: User }) {
+    async jwt({ token, user }: { token: any; user: any }) {
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -72,7 +68,7 @@ export const authOptions = {
       }
       return token;
     },
-    async session({ session, token }: { session: Session; token: any }) {
+    async session({ session, token }: { session: any; token: any }) {
       if (token) {
         session.user.id = token.id;
         session.user.name = token.name;
