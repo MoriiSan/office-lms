@@ -8,12 +8,17 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 const NavbarItems = [
-  { label: "Courses", icon: <GoChevronDown />, href: "/allcourses", testid: "available-courses" },
+  {
+    label: "Courses",
+    icon: <GoChevronDown />,
+    href: "/allcourses",
+    testid: "available-courses",
+  },
   { label: "Resources", icon: <GoChevronDown />, href: "/resources" },
   { label: "Community", icon: <GoChevronDown />, href: "/community" },
   { label: "Pricing", icon: <GoChevronDown />, href: "/pricing" },
 ];
-``
+
 interface NavbarProps {
   isLandingPage?: boolean;
 }

@@ -32,6 +32,19 @@ async function studentLogin(credentials: Credentials): Promise<any | null> {
   }
 }
 
+async function SSOlogin(email: string): Promise<any | null> {
+  try {
+    const user = await Student.findOne({ email: email });
+    if (!user) {
+      return null;
+    }
+    return { id: user._id.toString(), name: user.name, email: user.email };
+  } catch (error) {
+    console.log("SSO Login failed: ", error);
+    return null;
+  }
+}
+
 export const authOptions = {
   pages: {
     signIn: "/",
@@ -80,27 +93,39 @@ export const authOptions = {
     async signIn({ user, account }: { user: any; account: any }) {
       if (account.provider === "google") {
         const { name, email, image } = user;
+
         try {
-          const res = await fetch("http://localhost:3000/api/user/register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              name,
-              email,
-              image,
-            }),
-          });
-          if (res.ok) {
-            // console.log("New SSO login saved.");
+          await connectDB("skillforgeDB");
+
+          const existingUser = await SSOlogin(email);
+          if (existingUser) {
+            user.id = existingUser.id;
+            user.name = existingUser.name;
+            user.email = existingUser.email;
             return user;
+          } else {
+            const res = await fetch("http://localhost:3000/api/user/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                name,
+                email,
+                image,
+              }),
+            });
+            if (res.ok) {
+              return user;
+            } else {
+              console.log("Error registering new SSO user.");
+              return "/?failed=1";
+            }
           }
         } catch (error) {
           console.log("Error SSO Log-In.", error);
         }
       }
-
       return user;
     },
   },

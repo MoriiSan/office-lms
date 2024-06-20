@@ -26,14 +26,14 @@ const Settings = () => {
     isDeleteModal(!deleteModal);
   };
 
-  const deleteAccount = async (email: string) => {
+  const deleteAccount = async (accountId: string) => {
     try {
       const response = await fetch(`/api/user/deleteAccount`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ accountId }),
       });
       if (response.ok) {
         console.log("Account successfully deleted.");
@@ -72,7 +72,7 @@ const Settings = () => {
 
   const handleDelete = () => {
     if (session) {
-      deleteAccount(session!.user.email);
+      deleteAccount(session!.user.id);
     }
   };
   return (
