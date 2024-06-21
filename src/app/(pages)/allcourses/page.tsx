@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { MdOutlinePerson } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
 
-interface Course {
+interface iCourse {
   _id: string;
   instructor: IInstructor;
   courseCode: string;
@@ -18,7 +18,7 @@ interface Course {
 }
 
 const AllCourses = () => {
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<iCourse[]>([]);
   const [loading, setLoading] = useState(true);
 
   const stripHtmlTags = (str: string) => {

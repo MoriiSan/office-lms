@@ -8,18 +8,23 @@ import { ICourse } from "./courseModel";
 
 interface IStudent {
   _id: ObjectId;
+  stripeId: string;
   name: string;
   email: string;
   password: string;
   imageUrl: string;
   isSSO: boolean;
   courses: ICourse[];
+  subscriptionTier: "Free" | "Pro";
 }
 
 type StudentModel = Model<IStudent>;
 
 const studentSchema: Schema = new Schema<IStudent, StudentModel>(
   {
+    stripeId: {
+      type: String,
+    },
     name: {
       type: String,
       required: [true, "Name is required."],
@@ -42,6 +47,12 @@ const studentSchema: Schema = new Schema<IStudent, StudentModel>(
     courses: {
       type: [{ type: Schema.Types.ObjectId, ref: "Course" }],
     },
+    subscriptionTier: {
+      type: String,
+      enum: ["Free", "Pro"],
+      default: "Free",
+      required: true,
+    },
   },
   {
     timestamps: true,
@@ -49,8 +60,7 @@ const studentSchema: Schema = new Schema<IStudent, StudentModel>(
 );
 
 const Student: StudentModel =
-  models?.Student ||
-  model<IStudent, StudentModel>("Student", studentSchema);
+  models?.Student || model<IStudent, StudentModel>("Student", studentSchema);
 
 export type { IStudent };
 export { Student, studentSchema };

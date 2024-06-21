@@ -10,5 +10,6 @@ export const config = {
     "/notifications/:path*",
     "/profile/:path*",
     "/settings/:path*",
+    "/subscription/:path*"
   ],
 };
