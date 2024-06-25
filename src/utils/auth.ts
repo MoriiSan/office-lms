@@ -6,8 +6,8 @@ import { JWT } from "next-auth/jwt";
 const fetchUser = async (email: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXTAUTH_URL}/api/user/find`,
-      // "https://office-lms-admin.vercel.app/api/user/find",
+      // `${process.env.NEXTAUTH_URL}/api/user/find`,
+      "https://skillforge-two.vercel.app/api/user/find",
       {
         method: "POST",
         headers: {
@@ -63,7 +63,8 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
           return true;
         } else {
           const response = await fetch(
-            "http://localhost:3000/api/user/register",
+            // "http://localhost:3000/api/user/register",
+            "https://skillforge-two.vercel.app/api/user/register",
             {
               method: "POST",
               headers: {
