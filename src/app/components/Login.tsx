@@ -254,7 +254,7 @@ const Login: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                 Continue with Github
               </button>
               <div className="flex justify-center mt-2 gap-2 text-xs text-[#679289] ">
-                <div>Don't have an account yet?</div>
+                <div>Don`t have an account yet?</div>
                 <button
                   data-testid="login-signup-button"
                   className="text-[#071e22] font-medium"
