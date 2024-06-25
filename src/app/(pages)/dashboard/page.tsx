@@ -7,9 +7,11 @@ import Footer from "../../components/Footer";
 import { FaUserCircle } from "react-icons/fa";
 import ResumeIcon from "../../../../public/assets/icons/resume";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const Dashboard = () => {
   const router = useRouter();
+  const { status, data: session } = useSession();
 
   return (
     <>
@@ -17,6 +19,8 @@ const Dashboard = () => {
         <Navbar isLandingPage={false} />
         <div className="relative flex flex-row justify-start mx-4 my-4 ml-0">
           <div>
+            {JSON.stringify(session)}
+
             <Sidebar />
           </div>
           <div className="flex flex-1 overflow-y-auto bg-[#e7e4da] rounded-lg ">

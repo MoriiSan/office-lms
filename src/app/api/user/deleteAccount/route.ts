@@ -8,7 +8,7 @@ export const DELETE = async (request: NextRequest) => {
   const { accountId } = await request.json();
 
   try {
-    await connectDB("skillforgeDB");
+    await connectDB();
     console.log("Unenrolling student: ", accountId);
 
     // Fetch the student document

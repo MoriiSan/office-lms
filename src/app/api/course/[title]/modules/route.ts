@@ -2,17 +2,16 @@ import { connectDB } from "@/utils/connect";
 import { Course } from "@/models/courseModel";
 import { NextRequest, NextResponse } from "next/server";
 import { Instructor } from "@/models/instructorModel";
-import { authOptions } from "../../../auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import { auth } from "@/utils/auth";
 
 // Get a single course
 export const GET = async (
   request: NextRequest,
   { params }: { params: { title: string } }
 ) => {
-  await connectDB("skillforgeDB");
+  await connectDB();
 
-  const session = await getServerSession(authOptions);
+  const session = await auth();
 
   try {
     const course = await Course.findOne({
@@ -31,11 +30,13 @@ export const GET = async (
     }
 
     // Check if studentId exists in the course's students array
-    if (!course.students.includes(session?.user.id)) {
-      return NextResponse.json(
-        { message: "Unauthorized access to course" },
-        { status: 403 }
-      );
+    if (session && session.user && session.user.id) {
+      if (!course.students.includes(session?.user.id)) {
+        return NextResponse.json(
+          { message: "Unauthorized access to course" },
+          { status: 403 }
+        );
+      }
     }
 
     return NextResponse.json(course, { status: 200 });
@@ -49,7 +50,7 @@ export const DELETE = async (
   request: NextRequest,
   { params }: { params: { id: string } }
 ) => {
-  await connectDB("skillforgeDB");
+  await connectDB();
 
   try {
     const deletedCourse = await Course.findByIdAndDelete(params.id);

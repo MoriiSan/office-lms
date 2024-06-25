@@ -1,5 +1,5 @@
 import { DefaultSession, User } from 'next-auth';
-import 'next-auth/jwt';
+import { JWT } from "next-auth/jwt";
 
 // Read more at: https://next-auth.js.org/getting-started/typescript#module-augmentation
 
@@ -27,7 +27,7 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    user?: User;
+    user: User;
     accessToken?: string;
     refreshToken?: string;
     expiresAt?: number;

@@ -1,4 +1,4 @@
-import { connectDB } from "@/utils/connect";
+import { connectDB } from "@/utils/connect"; 
 import { Course } from "@/models/courseModel";
 import { NextRequest, NextResponse } from "next/server";
 import { Instructor } from "@/models/instructorModel";
@@ -9,7 +9,7 @@ export const GET = async (
   { params }: { params: { title: string } }
 ) => {
   try {
-    await connectDB("skillforgeDB");
+    await connectDB();
     const course = await Course.findOne({
       title: params.title,
       isPublished: true,
@@ -35,7 +35,7 @@ export const DELETE = async (
   request: NextRequest,
   { params }: { params: { id: string } }
 ) => {
-  await connectDB("skillforgeDB");
+  await connectDB();
 
   try {
     const deletedCourse = await Course.findByIdAndDelete(params.id);

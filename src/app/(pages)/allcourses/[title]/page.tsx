@@ -13,7 +13,7 @@ import { useSession } from "next-auth/react";
 import { IInstructor } from "@/models/instructorModel";
 import { toast } from "sonner";
 
-interface Course {
+interface iCourse {
   _id: string;
   instructor: IInstructor;
   courseCode: string;
@@ -22,12 +22,12 @@ interface Course {
   students: [string];
 }
 
-const previewCourses = () => {
+const PreviewCourses = () => {
   const { data: session } = useSession();
   const params = useParams();
   const router = useRouter();
   const title = Array.isArray(params.title) ? params.title[0] : params.title;
-  const [course, setCourse] = useState<Course | null>(null);
+  const [course, setCourse] = useState<iCourse | null>(null);
   const [students, setStudents] = useState([""]);
   const [courseId, setCourseId] = useState("");
   const [isEnrolled, setIsEnrolled] = useState(false);
@@ -420,4 +420,4 @@ const previewCourses = () => {
   );
 };
 
-export default previewCourses;
+export default PreviewCourses;

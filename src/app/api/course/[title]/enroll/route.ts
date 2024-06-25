@@ -1,6 +1,5 @@
 import { connectDB } from "@/utils/connect";
 import { Course } from "@/models/courseModel";
-import { Student } from "@/models/studentModel";
 import { NextRequest, NextResponse } from "next/server";
 
 // Update a course enrollees
@@ -11,7 +10,7 @@ export const PUT = async (
   const { enrollee } = await request.json();
 
   try {
-    await connectDB("skillforgeDB");
+    await connectDB();
     console.log("Course enrollee: ", enrollee);
     const updatedCourse = await Course.findOneAndUpdate(
       { title: params.title },
@@ -40,7 +39,7 @@ export const DELETE = async (
   const { enrollee } = await request.json();
 
   try {
-    await connectDB("skillforgeDB");
+    await connectDB();
     console.log("Unenrolling student: ", enrollee);
     const updatedCourse = await Course.findOneAndUpdate(
       { title: params.title },

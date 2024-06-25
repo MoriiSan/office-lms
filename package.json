@@ -17,7 +17,7 @@
     "mongodb": "^6.6.1",
     "mongoose": "^8.3.4",
     "next": "^14.2.3",
-    "next-auth": "^4.24.7",
+    "next-auth": "^5.0.0-beta.19",
     "notiflix": "^3.2.7",
     "react": "^18",
     "react-dom": "^18",

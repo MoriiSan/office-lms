@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (request: NextRequest) => {
   const { name, email, password, image, subscriptionTier } = await request.json();
 
-  await connectDB("skillforgeDB");
+  await connectDB();
 
   // Handle regular user registration
   if (password) {

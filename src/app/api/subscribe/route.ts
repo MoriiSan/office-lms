@@ -3,19 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/utils/connect";
 import { stripe } from "@/utils/stripe";
 import { Student } from "@/models/studentModel";
-import { authOptions } from "../auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+import { auth } from "@/utils/auth";
 
 export const POST = async (request: NextRequest) => {
   try {
-    await connectDB("skillforgeDB");
+    await connectDB();
 
-    const session = await getServerSession(authOptions);
+    const session = await auth();
     // if (!session) {
     //   return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     // }
 
-    const user = session.user;
+    const user = session!.user;
 
     if (!user || !user.id || !user.email) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });

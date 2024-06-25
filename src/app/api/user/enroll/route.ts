@@ -7,7 +7,7 @@ export const PUT = async (request: NextRequest) => {
   const { studentId, courseId } = await request.json();
 
   try {
-    await connectDB("skillforgeDB");
+    await connectDB();
     console.log("User Enrollee:", studentId);
     console.log("user CourseId", courseId);
 
@@ -33,7 +33,7 @@ export const DELETE = async (request: NextRequest) => {
   const { studentId, courseId } = await request.json();
 
   try {
-    await connectDB("skillforgeDB");
+    await connectDB();
     console.log("Removing course from student:", courseId);
 
     const user = await Student.findById(studentId);

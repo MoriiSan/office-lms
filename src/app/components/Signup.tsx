@@ -185,8 +185,8 @@ const Signup = () => {
             </div>
             <div className="flex justify-center text-xs text-[#679289]">
               <span>
-                By clicking sign up, you agree to AcademyQuest's{" "}
-                <u className="cursor-pointer">Terms of Services</u> &{" "}
+                By clicking sign up, you agree to AcademyQuest`s
+                <u className="cursor-pointer">Terms of Services</u> &
                 <u className="cursor-pointer">Privacy Policy</u>.
               </span>
             </div>

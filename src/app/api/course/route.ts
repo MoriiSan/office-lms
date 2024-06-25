@@ -5,7 +5,7 @@ import { Instructor } from "@/models/instructorModel";
 
 // Get all published courses
 export const GET = async (request: NextRequest) => {
-  await connectDB("skillforgeDB");
+  await connectDB();
 
   try {
     const courses = await Course.find({ isPublished: true }).populate({
