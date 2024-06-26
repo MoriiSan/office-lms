@@ -49,7 +49,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         session.user.name = token.name;
         session.user.email = token.email;
       }
-      console.log(session);
+      // console.log(session);
       return session;
     },
     async signIn({ user, account }: { user: any; account: any }) {

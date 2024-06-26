@@ -34,7 +34,7 @@ const Sidebar = () => {
         >
           <div className="icon-component flex justify-center items-center p-1 px-1.5 bg-[#071e22] text-white font-bold rounded">
             JD
-          </div> 
+          </div>
           {!isCollapsed && (
             <>
               <div
