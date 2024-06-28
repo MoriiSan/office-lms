@@ -3,7 +3,6 @@
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 import { IInstructor } from "@/models/instructorModel";
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdOutlinePerson } from "react-icons/md";
@@ -15,6 +14,9 @@ interface iCourse {
   courseCode: string;
   title: string;
   description: string;
+  students: string[];
+  subscriptionTier: string;
+  isEnrolled: boolean;
 }
 
 const AllCourses = () => {
@@ -51,6 +53,12 @@ const AllCourses = () => {
         <Navbar isLandingPage={false} />
         <div className="relative flex flex-row justify-start mx-4 my-4 ml-0">
           <div className="sticky top-[88px] min-w-[260px] flex flex-col">
+            <Link href="/dashboard">
+              <div className="flex flex-row items-center mx-4 mb-2 text-gray-500 hover:text-blue-800">
+                <IoArrowBack size={14} />
+                <div className="ml-1 text-xs font-medium">Back to Home</div>
+              </div>
+            </Link>
             <div className="p-4 mx-4 border rounded-md  border-gray-300">
               <div>Filters</div>
               <div>
@@ -63,15 +71,6 @@ const AllCourses = () => {
             </div>
           </div>
           <div className="right-container flex flex-col min-h-[85vh] flex-1 p-4 gap-4 bg-[#e7e4da] rounded-lg ">
-            <div className="flex flex-row justify-between items-center p-4 pt-3 rounded-md text-gray-100 bg-[#071e22] shadow">
-              <div className="text-2xl font-bold">Explore the catalog</div>
-            </div>
-            <Link href="/dashboard">
-              <div className="flex flex-row items-center text-gray-500 hover:text-blue-800">
-                <IoArrowBack />
-                <div className="ml-1 text-sm font-medium">Back to Home</div>
-              </div>
-            </Link>
             <div className="flex flex-row justify-between items-center p-4 pt-3 rounded-md border border-[#071e22] text-[#071e22] bg-[#F8F7F4]">
               <div>
                 <div className="text-lg font-bold">UPGRADE TO PRO</div>
@@ -80,10 +79,18 @@ const AllCourses = () => {
                   assessments, and certifications.
                 </div>
               </div>
-              <button className="h-[40px] px-3 rounded text-sm font-semibold bg-[#fac105] hover:bg-[#071e22] text-[#071e22] hover:text-white">
-                Upgrade
-              </button>
+              <Link href={"/pricing"}>
+                <button className="relative block border rounded hover:bg-[#071e22] transition-all">
+                  <div className="relative hover:left-1.5 hover:bottom-1.5  flex items-center justify-center h-[40px] px-3 text-sm font-semibold rounded bg-[#fac105] text-[#071e22]">
+                    Upgrade
+                  </div>
+                </button>
+              </Link>
             </div>
+            <div className="flex flex-row justify-between items-center p-4 pt-3 rounded-md text-gray-100 bg-[#071e22] shadow">
+              <div className="text-2xl font-bold">Explore the catalog</div>
+            </div>
+
             <div className="p-4 pt-3 rounded-md bg-[#F8F7F4] shadow">
               <div className="flex flex-row items-center font-bold text-xl mb-4 ">
                 <div>Browse all courses</div>
@@ -114,30 +121,39 @@ const AllCourses = () => {
                 </>
               ) : (
                 <>
-                  <div className="grid grid-cols-12 gap-8">
+                  <div className="grid grid-cols-12 gap-4">
                     {courses.map((course) => (
                       <div
                         key={course._id}
-                        className="single-card flex flex-col col-span-12 lg:col-span-6 xl:col-span-4"
+                        className="relative block single-card flex-col col-span-12 lg:col-span-6 xl:col-span-4 rounded hover:bg-[#071e22]"
                       >
-                        <Link href={`/allcourses/${course.title}`}
-                        data-testid={`available-course-{id}`}>
-                          <div className="border border-b-0 border-[#071e22] bg-[#ffabab] rounded-t py-1 px-3">
-                            Free Course
-                          </div>
-                          <div className="h-[250px] py-1 px-3 border border-y-0 border-[#071e22]">
-                            <div className="font-extrabold text-lg mb-1 mt-3">
-                              {course.title}
+                        <div className="relative hover:left-2 hover:bottom-2 rounded bg-[#F8F7F4]">
+                          <Link
+                            href={`/allcourses/${course.title}`}
+                            data-testid={`available-course-{id}`}
+                          >
+                            <div className="flex flex-row justify-between items-center text-sm font-mono border border-b-0 border-[#071e22] bg-[#ffabab] rounded-t py-1 px-3">
+                              <label className="">
+                                {course.subscriptionTier} Course
+                              </label>
+                              {course.isEnrolled && (
+                                <div className="font-semibold">Enrolled</div>
+                              )}
                             </div>
-                            <div>{stripHtmlTags(course.description)}</div>
-                          </div>
-                          <div className="flex border border-[#071e22] justify-between items-center rounded-b py-1 px-3">
-                            <div className="text-zinc-800 text-sm font-medium">
-                              {course.instructor.name}
+                            <div className="h-[200px] py-1 px-3 border border-y-0 border-[#071e22]">
+                              <div className="font-extrabold text-lg mb-1 mt-3">
+                                {course.title}
+                              </div>
+                              <div>{stripHtmlTags(course.description)}</div>
                             </div>
-                            <MdOutlinePerson size={16} />
-                          </div>
-                        </Link>
+                            <div className="flex border border-[#071e22] justify-between items-center rounded-b py-1 px-3">
+                              <div className="text-zinc-800 text-sm font-medium">
+                                {course.instructor.name}
+                              </div>
+                              <MdOutlinePerson size={16} />
+                            </div>
+                          </Link>
+                        </div>
                       </div>
                     ))}
                   </div>

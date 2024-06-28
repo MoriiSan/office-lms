@@ -83,7 +83,10 @@ const Subscription = () => {
                       <div className="text-4xl font-bold">$49.99</div>
                       <div className="text-sm font-medium ">Lifetime</div>
                     </div>
-                    <button className="flex self-end h-[40px] w-[200px] justify-center items-center text-white font-medium bg-gray-900">
+                    <button
+                      className="flex self-end h-[40px] w-[200px] justify-center items-center text-white font-medium bg-gray-900"
+                      onClick={subscribe}
+                    >
                       Upgrade
                     </button>
                   </div>

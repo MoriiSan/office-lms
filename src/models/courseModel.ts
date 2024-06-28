@@ -18,7 +18,7 @@ interface ICourse {
   imageThumbnail: string;
   isPublished: boolean;
   category: string[];
-  subscriptionType: "Free" | "Basic" | "Premium";
+  subscriptionTier: "Free" | "Pro";
   quizzes: string;
 }
 
@@ -62,9 +62,9 @@ const courseSchema: Schema = new Schema<ICourse, CourseModel>(
     category: {
       type: [String],
     },
-    subscriptionType: {
+    subscriptionTier: {
       type: String,
-      enum: ["Free", "Basic", "Premmium"],
+      enum: ["Free", "Pro"],
       default: "Free",
       required: true,
     },

@@ -12,8 +12,8 @@ interface Credentials {
 async function studentLogin(credentials: Credentials): Promise<any | null> {
   try {
     const response = await fetch(
-        // "http://localhost:3000/api/user/find",
-      "https://skillforge-two.vercel.app/api/user/find",
+        "http://localhost:3000/api/user/find",
+      // "https://skillforge-two.vercel.app/api/user/find",
       {
         method: "POST",
         headers: {

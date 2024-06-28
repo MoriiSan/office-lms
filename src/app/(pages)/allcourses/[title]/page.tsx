@@ -9,7 +9,6 @@ import Link from "next/link";
 import { IoIosArrowForward, IoIosArrowDown } from "react-icons/io";
 import { IoArrowBack, IoPersonCircleOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
-
 import { IInstructor } from "@/models/instructorModel";
 import { toast } from "sonner";
 
@@ -20,6 +19,8 @@ interface iCourse {
   title: string;
   description: string;
   students: [string];
+  subscriptionTier: string;
+  isSubscribed: boolean;
 }
 
 const PreviewCourses = () => {
@@ -32,6 +33,7 @@ const PreviewCourses = () => {
   const [courseId, setCourseId] = useState("");
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [studentSub, getStudentSub] = useState("");
 
   const stripHtmlTags = (str: string) => {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
@@ -44,7 +46,7 @@ const PreviewCourses = () => {
   }
 
   if (session && isEnrolled) {
-    if (!students.includes(session!.user.id)) {
+    if (!students.includes(session.user.id)) {
       setIsEnrolled(false);
     }
   }
@@ -211,7 +213,10 @@ const PreviewCourses = () => {
 
   useEffect(() => {
     fetchCourse();
-  }, [title, isEnrolled]);
+    // if (session) {
+    //   fetchUser(session?.user.id);
+    // }
+  }, [title, isEnrolled, session]);
 
   const handleEnroll = () => {
     if (session) {
@@ -260,7 +265,12 @@ const PreviewCourses = () => {
                       </Link>
                       {course && (
                         <>
-                          <div className="text-sm ">{course.courseCode}</div>
+                          <div className=" text-sm ">
+                            {course.courseCode}{" "}
+                            <label className="px-2 rounded-full text-xs font-mono font-normal bg-[#fcdc1c]">
+                              {course.subscriptionTier.toUpperCase()} COURSE
+                            </label>
+                          </div>
 
                           <div className="text-4xl font-bold mt-1 mb-4">
                             {course.title}
@@ -277,7 +287,6 @@ const PreviewCourses = () => {
                           </div>
                         </>
                       )}
-
                       {isEnrolled ? (
                         <>
                           <div className="flex flex-row justify-between items-center mt-4">
@@ -306,21 +315,44 @@ const PreviewCourses = () => {
                         </>
                       ) : (
                         <>
-                          <div className="flex flex-row items-center mt-4 gap-2">
-                            <button
-                              className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]"
-                              onClick={handleEnroll}
-                              data-testid="register-course-{id}"
-                            >
-                              Enroll
-                            </button>
-                            <div className="flex flex-row items-center gap-2 text-sm">
-                              <div>
-                                <b>{course?.students.length}</b> Students
-                                Enrolled
+                          {course!.isSubscribed ? (
+                            <>
+                              <div className="flex flex-row items-center mt-4 gap-2">
+                                <button
+                                  className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]"
+                                  onClick={handleEnroll}
+                                  data-testid="register-course-{id}"
+                                >
+                                  Enroll
+                                </button>
+                                <div className="flex flex-row items-center gap-2 text-sm">
+                                  <div>
+                                    <b>{course?.students.length}</b> Students
+                                    Enrolled
+                                  </div>
+                                </div>
                               </div>
-                            </div>
-                          </div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="flex flex-row items-center mt-4 gap-2">
+                                <Link href={"/pricing"}>
+                                  <button
+                                    className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]"
+                                    data-testid=""
+                                  >
+                                    Upgrade Subscription
+                                  </button>
+                                </Link>
+                                <div className="flex flex-row items-center gap-2 text-sm">
+                                  <div>
+                                    <b>{course?.students.length}</b> Students
+                                    Enrolled
+                                  </div>
+                                </div>
+                              </div>
+                            </>
+                          )}
                         </>
                       )}
                     </div>
@@ -369,8 +401,10 @@ const PreviewCourses = () => {
                       </div>
                       {isEnrolled && (
                         <>
-                          <Link href={`/allcourses/${title}/quizzes`}
-                          data-testid="active-lesson-{id}-quiz">
+                          <Link
+                            href={`/allcourses/${title}/quizzes`}
+                            data-testid="active-lesson-{id}-quiz"
+                          >
                             <IoIosArrowDown size={28} />
                           </Link>
                         </>

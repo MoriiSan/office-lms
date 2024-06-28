@@ -1,3 +1,4 @@
+import { Student } from "@/models/studentModel";
 import { connectDB } from "@/utils/connect";
 import { stripe } from "@/utils/stripe";
 import { headers } from "next/headers";
@@ -21,24 +22,31 @@ export const POST = async (req: Request) => {
   }
 
   try {
-    let subscription;
+    await connectDB();
 
     switch (event.type) {
       case "checkout.session.completed":
         const session = event.data.object as Stripe.Checkout.Session;
         if (session.mode === "payment") {
+          const customerId = session.customer as string;
+
+          const student = await Student.findOne({ stripeId: customerId });
+          if (student) {
+            student.subscriptionTier = "Pro";
+            await student.save();
+          }
           console.log("NATAWAG!");
         }
         break;
       default:
-        return new NextResponse(
+        return NextResponse.json(
           `Webhook Error: Unhandled Event type ${event.type}`,
           { status: 200 }
         );
     }
-    return new NextResponse("Success", { status: 200 });
-  } catch (error: any) {
+    return NextResponse.json("Success", { status: 200 });
+  } catch (error) {
     console.log(error);
-    return new NextResponse("Failed", { status: 500 });
+    return NextResponse.json("Failed", { status: 500 });
   }
 };
