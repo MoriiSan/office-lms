@@ -5,6 +5,7 @@ import { Student } from "@/models/studentModel";
 import { auth } from "@/utils/auth";
 
 export const POST = async (request: NextRequest) => {
+  const { urlPath } = await request.json();
   try {
     await connectDB();
 
@@ -17,6 +18,14 @@ export const POST = async (request: NextRequest) => {
 
     if (!user || !user.id || !user.email) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+    const product = await stripe.products.retrieve(
+      process.env.STRIPE_PRODUCT_ID
+    );
+    if (!product) {
+      return NextResponse.json("Product does not exist", { status: 404 });
     }
 
     let student = await Student.findById(user.id);
@@ -38,12 +47,12 @@ export const POST = async (request: NextRequest) => {
       customer: student.stripeId,
       line_items: [
         {
-          price: process.env.PRO_PRICE_ID!,
+          price: product.default_price,
           quantity: 1,
         },
       ],
       mode: "payment",
-      success_url: `${process.env.NEXTAUTH_URL!}/success=true`,
+      success_url: `${process.env.NEXTAUTH_URL!}/allcourses?success=true`,
       cancel_url: `${process.env.NEXTAUTH_URL!}/pricing`,
       //   metadata: {
       //     userId: user.id,
@@ -61,5 +70,3 @@ export const POST = async (request: NextRequest) => {
     return new NextResponse("Internal Error", { status: 500 });
   }
 };
-
-
