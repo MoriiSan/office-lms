@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { MdOutlinePerson } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
-import { usePathname, useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 interface iCourse {
   _id: string;
@@ -21,8 +21,6 @@ interface iCourse {
 }
 
 const AllCourses = () => {
-  const router = useRouter();
-  const pathName = usePathname();
   const [courses, setCourses] = useState<iCourse[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -59,7 +57,9 @@ const AllCourses = () => {
             <Link href="/dashboard">
               <div className="flex flex-row items-center mx-4 mb-2 text-gray-500 hover:text-blue-800">
                 <IoArrowBack size={14} />
-                <div className="ml-1 text-xs font-medium">Back to Home</div>
+                <div className="ml-1 text-xs font-medium">
+                  Back to Dashboard
+                </div>
               </div>
             </Link>
             <div className="p-4 mx-4 border rounded-md  border-gray-300">
@@ -84,9 +84,7 @@ const AllCourses = () => {
               </div>
 
               <Link href={"/pricing"}>
-                <button
-                  className="relative block border rounded hover:bg-[#071e22] transition-all"
-                >
+                <button className="relative block border rounded hover:bg-[#071e22] transition-all">
                   <div className="relative hover:left-1.5 hover:bottom-1.5  flex items-center justify-center h-[40px] px-3 text-sm font-semibold rounded bg-[#fac105] text-[#071e22]">
                     Upgrade
                   </div>

@@ -315,7 +315,7 @@ const PreviewCourses = () => {
                         </>
                       ) : (
                         <>
-                          {course!.isSubscribed ? (
+                          {course!.subscriptionTier === "Free" ? (
                             <>
                               <div className="flex flex-row items-center mt-4 gap-2">
                                 <button
@@ -335,22 +335,44 @@ const PreviewCourses = () => {
                             </>
                           ) : (
                             <>
-                              <div className="flex flex-row items-center mt-4 gap-2">
-                                <Link href={"/pricing"}>
-                                  <button
-                                    className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]"
-                                    data-testid=""
-                                  >
-                                    Upgrade Subscription
-                                  </button>
-                                </Link>
-                                <div className="flex flex-row items-center gap-2 text-sm">
-                                  <div>
-                                    <b>{course?.students.length}</b> Students
-                                    Enrolled
+                              {course!.isSubscribed ? (
+                                <>
+                                  <div className="flex flex-row items-center mt-4 gap-2">
+                                    <button
+                                      className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]"
+                                      onClick={handleEnroll}
+                                      data-testid="register-course-{id}"
+                                    >
+                                      Enroll
+                                    </button>
+                                    <div className="flex flex-row items-center gap-2 text-sm">
+                                      <div>
+                                        <b>{course?.students.length}</b>{" "}
+                                        Students Enrolled
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              </div>
+                                </>
+                              ) : (
+                                <>
+                                  <div className="flex flex-row items-center mt-4 gap-2">
+                                    <Link href={"/pricing"}>
+                                      <button
+                                        className="p-1 px-3 h-[40px] w-[250px] rounded text-white font-semibold bg-[#3510bc] hover:bg-[#393299]"
+                                        data-testid=""
+                                      >
+                                        Upgrade Subscription
+                                      </button>
+                                    </Link>
+                                    <div className="flex flex-row items-center gap-2 text-sm">
+                                      <div>
+                                        <b>{course?.students.length}</b>{" "}
+                                        Students Enrolled
+                                      </div>
+                                    </div>
+                                  </div>
+                                </>
+                              )}
                             </>
                           )}
                         </>

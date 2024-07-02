@@ -124,9 +124,11 @@ const Sidebar = () => {
                 assessments, and certifications.
               </div>
 
-              <button className="flex justify-center rounded-md mt-4 py-2 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]">
-                Upgrade
-              </button>
+              <Link href={"/pricing"} className="flex justify-center rounded-md mt-4 py-2 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]">
+                <button className="flex ">
+                  Upgrade
+                </button>
+              </Link>
             </>
           )}
         </div>

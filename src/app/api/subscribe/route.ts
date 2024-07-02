@@ -5,7 +5,6 @@ import { Student } from "@/models/studentModel";
 import { auth } from "@/utils/auth";
 
 export const POST = async (request: NextRequest) => {
-  const { urlPath } = await request.json();
   try {
     await connectDB();
 
@@ -52,7 +51,7 @@ export const POST = async (request: NextRequest) => {
         },
       ],
       mode: "payment",
-      success_url: `${process.env.NEXTAUTH_URL!}/allcourses?success=true`,
+      success_url: `${process.env.NEXTAUTH_URL!}/pricing/success=true`,
       cancel_url: `${process.env.NEXTAUTH_URL!}/pricing`,
       //   metadata: {
       //     userId: user.id,

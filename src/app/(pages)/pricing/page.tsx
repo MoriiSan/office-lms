@@ -4,15 +4,11 @@ import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
 import { useEffect, useState } from "react";
 import { FaPesoSign } from "react-icons/fa6";
-import { useRouter } from "next/navigation";
-
-
+import { toast } from "sonner";
 
 const Subscription = () => {
   const [currentPrice, setCurrentPrice] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {}, []);
 
   const fetchCurrentPrice = async () => {
     try {
@@ -40,9 +36,18 @@ const Subscription = () => {
       });
       if (response.ok) {
         const { url } = await response.json();
-        // console.log(data)
         console.log("Subscribe successfully.");
         window.location.assign(url);
+      } else {
+        console.log("Failed to subscribe.");
+        toast.error("Failed to subscribe.", {
+          position: "bottom-right",
+          classNames: {
+            title: "text-red-600",
+            description: "text-red-600",
+            error: "text-red-600",
+          },
+        });
       }
     } catch (error) {
       console.log("Error subscribing: ", error);

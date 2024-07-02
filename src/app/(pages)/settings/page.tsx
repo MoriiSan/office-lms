@@ -1,25 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import Sidebar from "../../components/Sidebar";
-import EmailIcon from "../../../../public/assets/icons/email";
-import PasswordIcon from "../../../../public/assets/icons/password";
-import EyeIcon from "../../../../public/assets/icons/eye";
-import EyeClosedIcon from "../../../../public/assets/icons/eyeClosed";
-import WarningIcon from "../../../../public/assets/icons/warning";
-import ValidIcon from "../../../../public/assets/icons/valid";
-import { FcGoogle } from "react-icons/fc";
-import { VscGithubInverted } from "react-icons/vsc";
-import { GoX } from "react-icons/go";
 import { signOut, useSession } from "next-auth/react";
 import { toast } from "sonner";
 
 const Settings = () => {
   const { data: session } = useSession();
-  const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
   const [deleteModal, isDeleteModal] = useState(false);
 
   const handleDeleteModal = () => {
