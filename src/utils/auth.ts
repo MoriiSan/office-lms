@@ -6,8 +6,8 @@ import { JWT } from "next-auth/jwt";
 const fetchUser = async (email: string) => {
   try {
     const response = await fetch(
-      `${process.env.NEXTAUTH_URL}/api/user/find`,
-      // "https://skillforge-two.vercel.app/api/user/find",
+      // `${process.env.NEXTAUTH_URL}/api/user/find`,
+      "https://skillforge-two.vercel.app/api/user/find",
       {
         method: "POST",
         headers: {
