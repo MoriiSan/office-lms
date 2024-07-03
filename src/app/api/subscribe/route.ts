@@ -39,6 +39,7 @@ export const POST = async (request: NextRequest) => {
 
       // Update the student document with the new stripeId
       student.stripeId = customer.id;
+      student.subscriptionTier = "Pro";
       await student.save();
     }
 
