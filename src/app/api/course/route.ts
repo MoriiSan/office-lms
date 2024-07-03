@@ -2,7 +2,6 @@ import { connectDB } from "@/utils/connect";
 import { Course } from "@/models/courseModel";
 import { NextRequest, NextResponse } from "next/server";
 import { Instructor } from "@/models/instructorModel";
-import { Student } from "@/models/studentModel";
 import { auth } from "@/utils/auth";
 
 // Get all published courses
