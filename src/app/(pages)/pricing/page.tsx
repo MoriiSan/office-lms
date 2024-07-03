@@ -2,13 +2,40 @@
 
 import Footer from "@/app/components/Footer";
 import Navbar from "@/app/components/Navbar";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import { toast } from "sonner";
 
 const Subscription = () => {
+  const { data: session } = useSession();
+  const [proUser, setProUser] = useState(false);
   const [currentPrice, setCurrentPrice] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
+  const [fetchingUser, setFetchingUser] = useState(true);
+
+  const getUser = async (id: string) => {
+    try {
+      const response = await fetch(`/api/user/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: id }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.subscriptionTier === "Pro") {
+          setProUser(true);
+        }
+        // console.log("user: ", data.subscriptionTier);
+      }
+    } catch (error) {
+      console.log("Error fetching user: ", error);
+    } finally {
+      setFetchingUser(false);
+    }
+  };
 
   const fetchCurrentPrice = async () => {
     try {
@@ -58,6 +85,12 @@ const Subscription = () => {
     fetchCurrentPrice();
   }, []);
 
+  useEffect(() => {
+    if (session && session.user) {
+      getUser(session.user.id);
+    }
+  }, [session]);
+
   return (
     <>
       <div className="  flex flex-col h-auto bg-[#F8F7F4] text-[#071e22] ">
@@ -76,11 +109,11 @@ const Subscription = () => {
             </div>
 
             <div className="flex flex-row gap-8 justify-center items-end">
-              <div className="flex flex-row p-6 gap-4 border border-gray-900 ">
+              <div className="flex flex-row p-6 mb-3 gap-4 border border-gray-900 ">
                 <div className="flex flex-col">
                   <div className="flex flex-row mb-2 gap-2 items-center">
                     <div className="text-lg font-bold">Free</div>
-                    <div className="flex jsutify-center items-center h-[20px] text-xs leading-3 font-medium border px-3 border-gray-900 bg-[#fcdc1c] rounded-full">
+                    <div className="flex jsutify-center items-center h-[20px] text-xs leading-3 font-medium border px-3 border-gray-900 bg-[#] rounded-full">
                       Default
                     </div>
                   </div>
@@ -91,9 +124,19 @@ const Subscription = () => {
                     <div className="text-4xl font-bold">$0</div>
                     <div className="text-sm font-medium ">Always</div>
                   </div>
-                  <div className="flex h-[40px] w-[200px] justify-center items-center text-gray-900 font-medium border border-gray-900">
-                    Current
-                  </div>
+                  {fetchingUser ? (
+                    <></>
+                  ) : (
+                    <>
+                      {!proUser && (
+                        <>
+                          <div className="flex h-[40px] w-[200px] justify-center items-center text-gray-900 font-medium border border-gray-900">
+                            Current
+                          </div>
+                        </>
+                      )}
+                    </>
+                  )}
                 </div>
                 <div className="flex flex-col justify-evenly w-[200px] gap-2 text-xs font-medium">
                   <div>Access to a limited selection of courses</div>
@@ -109,6 +152,19 @@ const Subscription = () => {
                   <div className="flex flex-col">
                     <div className="flex flex-row mb-2 gap-2 items-center">
                       <div className="text-lg font-bold">Pro Subscription</div>
+                      {fetchingUser ? (
+                        <></>
+                      ) : (
+                        <>
+                          {proUser && (
+                            <>
+                              <div className="flex jsutify-center items-center h-[20px] text-xs leading-3 font-medium border px-3 border-gray-900 bg-[#fcdc1c] rounded-full">
+                                Unlocked
+                              </div>
+                            </>
+                          )}
+                        </>
+                      )}
                     </div>
                     <div className="w-[250px] text-sm">
                       Unlock exclusive content and elevate your learning
@@ -132,13 +188,31 @@ const Subscription = () => {
                       </div>
                       <div className="text-sm font-medium mb-1">Lifetime</div>
                     </div>
-
-                    <button className="relative group" onClick={subscribe}>
-                      <div className="absolute h-[40px] w-full bg-[#071e22] transition-transform duration-150 group-hover:-translate-x-1 group-hover:translate-y-1"></div>
-                      <div className="absolute flex h-[40px] w-full justify-center items-center text-[#071e22] font-medium border  border-[#071e22] bg-[#fcdc1c] transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                        Upgrade
-                      </div>
-                    </button>
+                    {fetchingUser ? (
+                      <></>
+                    ) : (
+                      <>
+                        {!proUser ? (
+                          <>
+                            <button
+                              className="relative group"
+                              onClick={subscribe}
+                            >
+                              <div className="absolute h-[40px] w-full bg-[#071e22] transition-transform duration-150 group-hover:-translate-x-1 group-hover:translate-y-1"></div>
+                              <div className="absolute flex h-[40px] w-full justify-center items-center text-[#071e22] font-medium border  border-[#071e22] bg-[#fcdc1c] transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                                Upgrade
+                              </div>
+                            </button>
+                          </>
+                        ) : (
+                          <>
+                            <div className="flex h-[40px] w-full justify-center items-center text-[#071e22] font-medium border  border-[#071e22] bg-[#fcdc1c] transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                              Current
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
                   </div>
                   <div className="flex flex-col justify-evenly w-[200px] gap-2 text-xs font-medium">
                     <div>Unlimited access to all courses</div>

@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { MdOutlinePerson } from "react-icons/md";
 import { IoArrowBack } from "react-icons/io5";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 interface iCourse {
   _id: string;
@@ -21,11 +22,37 @@ interface iCourse {
 }
 
 const AllCourses = () => {
+  const { data: session } = useSession();
+  const [proUser, setProUser] = useState(false);
   const [courses, setCourses] = useState<iCourse[]>([]);
   const [loading, setLoading] = useState(true);
+  const [fetchingUser, setFetchingUser] = useState(true);
 
   const stripHtmlTags = (str: string) => {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
+  };
+
+  const getUser = async (id: string) => {
+    try {
+      const response = await fetch(`/api/user/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: id }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.subscriptionTier === "Pro") {
+          setProUser(true);
+        }
+        // console.log("user: ", data.subscriptionTier);
+      }
+    } catch (error) {
+      console.log("Error fetching user: ", error);
+    } finally {
+      setFetchingUser(false);
+    }
   };
 
   const getCourses = async () => {
@@ -47,6 +74,12 @@ const AllCourses = () => {
   useEffect(() => {
     getCourses();
   }, []);
+
+  useEffect(() => {
+    if (session && session.user) {
+      getUser(session.user.id);
+    }
+  }, [session]);
 
   return (
     <>
@@ -74,23 +107,35 @@ const AllCourses = () => {
             </div>
           </div>
           <div className="right-container flex flex-col min-h-[85vh] flex-1 p-4 gap-4 bg-[#e7e4da] rounded-lg ">
-            <div className="flex flex-row justify-between items-center p-4 pt-3 rounded-md border border-[#071e22] text-[#071e22] bg-[#F8F7F4]">
-              <div>
-                <div className="text-lg font-bold">UPGRADE TO PRO</div>
-                <div className="flex text-sm">
-                  Level up with practical skills. Dive into real projects,
-                  assessments, and certifications.
-                </div>
-              </div>
+            {fetchingUser ? (
+              <></>
+            ) : (
+              <>
+                {" "}
+                {!proUser && (
+                  <>
+                    <div className="flex flex-row justify-between items-center p-4 pt-3 rounded-md border border-[#071e22] text-[#071e22] bg-[#F8F7F4]">
+                      <div>
+                        <div className="text-lg font-bold">UPGRADE TO PRO</div>
+                        <div className="flex text-sm">
+                          Level up with practical skills. Dive into real
+                          projects, assessments, and certifications.
+                        </div>
+                      </div>
 
-              <Link href={"/pricing"}>
-                <button className="relative block border rounded hover:bg-[#071e22] transition-all">
-                  <div className="relative hover:left-1.5 hover:bottom-1.5  flex items-center justify-center h-[40px] px-3 text-sm font-semibold rounded bg-[#fac105] text-[#071e22]">
-                    Upgrade
-                  </div>
-                </button>
-              </Link>
-            </div>
+                      <Link href={"/pricing"}>
+                        <button className="relative block border rounded hover:bg-[#071e22] transition-all">
+                          <div className="relative hover:left-1.5 hover:bottom-1.5  flex items-center justify-center h-[40px] px-3 text-sm font-semibold rounded bg-[#fac105] text-[#071e22]">
+                            Upgrade
+                          </div>
+                        </button>
+                      </Link>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
+
             <div className="flex flex-row justify-between items-center p-4 pt-3 rounded-md text-gray-100 bg-[#071e22] shadow">
               <div className="text-2xl font-bold">Explore the catalog</div>
             </div>

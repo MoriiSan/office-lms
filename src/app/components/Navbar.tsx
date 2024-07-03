@@ -72,7 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLandingPage = true }) => {
           <div className="flex items-center">
             <a
               className="text-xl font-extrabold hover:text-[#fac105] mr-10"
-              href="/"
+              href="/dashboard"
             >
               SkillForge
             </a>

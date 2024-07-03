@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { GoSidebarExpand, GoSidebarCollapse } from "react-icons/go";
@@ -17,6 +17,37 @@ const Sidebar = () => {
   const pathname = usePathname();
   const { data: session } = useSession();
   const { isCollapsed, toggleSidebar } = useSidebar();
+  const [proUser, setProUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getUser = async (id: string) => {
+    try {
+      const response = await fetch(`/api/user/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ _id: id }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.subscriptionTier === "Pro") {
+          setProUser(true);
+        }
+        // console.log("user: ", data.subscriptionTier);
+      }
+    } catch (error) {
+      console.log("Error fetching user: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (session && session.user) {
+      getUser(session.user.id);
+    }
+  }, [session]);
 
   return (
     <aside
@@ -42,10 +73,21 @@ const Sidebar = () => {
                   isCollapsed ? "w-0" : "w-full"
                 } `}
               >
-                <div className="font-semibold text-xs">
-                  {session?.user?.name}
-                </div>
-                <div className="text-xs">{session?.user?.email}</div>
+                {isLoading ? (
+                  <>
+                    <div className="animate-pulse flex flex-col gap-1">
+                      <div className="w-full h-[16px] rounded bg-gray-200"></div>
+                      <div className="w-full h-[16px] rounded bg-gray-200"></div>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="font-semibold text-xs">
+                      {session?.user?.name}
+                    </div>
+                    <div className="text-xs">{session?.user?.email}</div>
+                  </>
+                )}
               </div>
             </>
           )}
@@ -99,39 +141,50 @@ const Sidebar = () => {
           ))}
         </div>
         {/* premium component */}
-        <div
-          className={`flex flex-col ${
-            isCollapsed ? "" : "w-[260px] "
-          }  rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]`}
-        >
-          {isCollapsed ? (
-            <>
-              <span>
-                <BsRocketTakeoffFill />
-              </span>
-            </>
-          ) : (
-            <>
-              <div className="flex gap-2 items-center text-md font-bold mb-2">
-                <div>Upgrade to PRO</div>
-                <span>
-                  <BsRocketTakeoffFill />
-                </span>
-              </div>
+        {isLoading ? (
+          <></>
+        ) : (
+          <>
+            {!proUser && (
+              <>
+                <div
+                  className={`flex flex-col ${
+                    isCollapsed ? "" : "w-[260px] "
+                  }  rounded-md p-4 border-[#071e22] bg-[#e7e4da] hover:bg-[#fac105]`}
+                >
+                  {isCollapsed ? (
+                    <>
+                      <span>
+                        <BsRocketTakeoffFill />
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex gap-2 items-center text-md font-bold mb-2">
+                        <div>Upgrade to PRO</div>
+                        <span>
+                          <BsRocketTakeoffFill />
+                        </span>
+                      </div>
 
-              <div className="flex text-xs ">
-                Level up with practical skills. Dive into real projects,
-                assessments, and certifications.
-              </div>
+                      <div className="flex text-xs ">
+                        Level up with practical skills. Dive into real projects,
+                        assessments, and certifications.
+                      </div>
 
-              <Link href={"/pricing"} className="flex justify-center rounded-md mt-4 py-2 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]">
-                <button className="flex ">
-                  Upgrade
-                </button>
-              </Link>
-            </>
-          )}
-        </div>
+                      <Link
+                        href={"/pricing"}
+                        className="flex justify-center rounded-md mt-4 py-2 text-sm font-semibold bg-[#071e22] text-[#F8F7F4]"
+                      >
+                        <button className="flex ">Upgrade</button>
+                      </Link>
+                    </>
+                  )}
+                </div>
+              </>
+            )}
+          </>
+        )}
       </div>
     </aside>
   );
